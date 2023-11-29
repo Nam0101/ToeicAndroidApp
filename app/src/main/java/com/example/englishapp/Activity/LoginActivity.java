@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.View;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,36 +43,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initControl() {
 
-        btnForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ForgotPasswordActivity.class);
-                startActivity(intent);
-            }
+        btnForgotPass.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),ForgotPasswordActivity.class);
+            startActivity(intent);
         });
-        SignUpbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+        SignUpbtn.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this,RegisterActivity.class)));
+
+        IconPasshide.setOnClickListener(view -> {
+            if (PasswordShowing){
+                PasswordShowing = false ;
+                edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                IconPasshide.setImageResource(R.drawable.hide);
+
+            }else {
+                PasswordShowing = true ;
+
+                edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                IconPasshide.setImageResource(R.drawable.eye);
             }
-        });
-
-        IconPasshide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (PasswordShowing){
-                    PasswordShowing = false ;
-                    edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    IconPasshide.setImageResource(R.drawable.hide);
-
-                }else {
-                    PasswordShowing = true ;
-
-                    edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    IconPasshide.setImageResource(R.drawable.eye);
-                }
-                edtPassword.setSelection(edtPassword.length());
-            }
+            edtPassword.setSelection(edtPassword.length());
         });
 
         btnSignIn.setOnClickListener(view -> {
@@ -97,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 },
                                 throwable -> {
-                                    Toast.makeText(getApplicationContext(),throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),throwable.getMessage(), Toast.LENGTH_LONG).show();
+                                    Log.i("TAG", "initControl: "+throwable.getMessage());
                                 }
                         ));
             }

@@ -136,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
         
         mangChucnang = new ArrayList<>();// khởi tạo mảng
-
-
     }
     private boolean isConnected(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Activity.RegisterActivity">
+
+    <TextView
+        android:id="@+id/btnSignInDangki"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Create a new account"
+        android:layout_margin="7dp"/>
+    <EditText
+        android:id="@+id/edtuserNameDangki"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515"
+        android:hint="User Name"
+        android:maxLines="1"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        />
+    <EditText
+        android:id="@+id/edtGmail"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515"
+        android:hint="Gmail"
+        android:maxLines="1"
+        android:inputType="textEmailAddress"
+        android:textSize="16sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        />
+    <EditText
+        android:id="@+id/edtPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515"
+        android:hint="Mobile"
+        android:maxLines="1"
+        android:inputType="number"
+        android:textSize="16sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515">
+
+        <EditText
+            android:id="@+id/edtPassWordSigUp"
+            android:layout_toStartOf="@+id/IconPassHideUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Password"
+            android:background="@android:color/transparent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:maxLines="1"/>
+        <ImageView
+            android:id="@+id/IconPassHideUp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/hide"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515">
+
+        <EditText
+            android:id="@+id/edtConPassWordSigUp"
+            android:layout_toStartOf="@+id/IconConPassHideUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint=" Confirm Password"
+            android:background="@android:color/transparent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:maxLines="1"/>
+        <ImageView
+            android:id="@+id/IconConPassHideUp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/hide"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"/>
+
+    </RelativeLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:background="@drawable/round_background_primary"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account ? "
+            />
+        <TextView
+            android:id="@+id/btnSignInUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/primary"
+            android:text="Sign In"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</LinearLayout>

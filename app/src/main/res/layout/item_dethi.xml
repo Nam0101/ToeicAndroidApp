@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="7dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/txtTende"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ETS 23 TOEIC Test 1"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+
+        <TextView
+            android:id="@+id/txtBodethi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bộ đề thi: ETS 23"/>
+        <TextView
+            android:id="@+id/txtThoigianDethi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời gian : 120p"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/txtPhanthi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="7 phần thi"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text="|"/>
+            <TextView
+                android:id="@+id/txtSocau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="100 câu hỏi đọc"/>
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnChitietdethi"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Chi Tiết"
+            android:background="@drawable/bo_vien_button"
+            android:layout_margin="7dp"/>
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

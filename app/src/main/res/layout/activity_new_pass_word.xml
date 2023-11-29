@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Activity.NewPassWordActivity">
+
+
+    <TextView
+        android:id="@+id/btnSignInDangki"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter your new password"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Please enter your new password to log in to your account."
+        android:layout_margin="7dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515">
+
+        <EditText
+            android:id="@+id/edtNewPassWord"
+            android:layout_toStartOf="@+id/IconPassHideUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="New Password"
+            android:background="@android:color/transparent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:maxLines="1"/>
+        <ImageView
+            android:id="@+id/IconPassHideUp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/eye"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/drawble_roudback_dark_blue_515">
+
+        <EditText
+            android:id="@+id/edtConNewPassWord"
+            android:layout_toStartOf="@+id/IconConPassHideUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint=" Confirm New Password"
+            android:background="@android:color/transparent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:maxLines="1"/>
+        <ImageView
+            android:id="@+id/IconConPassHideUp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/eye"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Change"
+        android:textAllCaps="false"
+        android:background="@drawable/round_background_primary"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account ? "
+            />
+        <TextView
+            android:id="@+id/btnSignInchangeNewpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/primary"
+            android:text="Sign In"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+</LinearLayout>

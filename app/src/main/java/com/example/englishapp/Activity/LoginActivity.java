@@ -74,22 +74,30 @@ public class LoginActivity extends AppCompatActivity {
             }else if (TextUtils.isEmpty(str_pass)) {
                 Toast.makeText(getApplicationContext(), "Bạn hãy nhập Mật khẩu nhé!", Toast.LENGTH_SHORT).show();
             }else{
-                compositeDisposable.add(apiApp.dangnhap(str_email,str_pass)
+                compositeDisposable.add(apiApp.dangnhap(str_email, str_pass)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 userModel -> {
-                                    if(userModel.isSuccess()){
-                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    if (userModel.isSuccess()) {
+                                        // Login success
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Log.i("TAG", "Login success: " + userModel.getMessage());
                                         startActivity(intent);
                                         finish();
+                                    } else {
+                                        // Login failed, handle the error message
+                                        Log.i("TAG", "Login failed: " + userModel.getMessage());
+                                        Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 },
                                 throwable -> {
-                                    Toast.makeText(getApplicationContext(),throwable.getMessage(), Toast.LENGTH_LONG).show();
-                                    Log.i("TAG", "initControl: "+throwable.getMessage());
+                                    // Handle network or other errors
+                                    Log.e("TAG", "Error during login", throwable);
+                                    Toast.makeText(getApplicationContext(), "Error during login", Toast.LENGTH_LONG).show();
                                 }
                         ));
+
             }
 
         });

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -102,12 +103,16 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(
                         cacChnangModel -> {
                             mangChucnang = cacChnangModel.getResult();
-                            cacChucnangAdapter = new CacChucnangAdapter(getApplicationContext(),mangChucnang);// khởi tạo adapter
+                            cacChucnangAdapter = new CacChucnangAdapter(getApplicationContext(), mangChucnang);
                             listViewManhinhchinh.setAdapter(cacChucnangAdapter);
+                        },
+                        throwable -> {
+                            Log.e("TAG", "Error fetching chucnang", throwable);
+                            Toast.makeText(getApplicationContext(), "Error fetching chucnang", Toast.LENGTH_LONG).show();
                         }
                 ));
-
     }
+
 
     private void actionBar() {
         setSupportActionBar(toolbarManhinhchinh);

@@ -39,53 +39,47 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     private void initControl() {
-        btnForgotPassSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-            }
+        btnForgotPassSignIn.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
         });
-        btnForgotPassSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnForgotPassSearch.setOnClickListener(view -> {
 
-                String str_email = edtForgotPassGmail.getText().toString().trim();
-                String str_mobile = edtForgotPassMobile.getText().toString().trim();
+            String str_email = edtForgotPassGmail.getText().toString().trim();
+            String str_mobile = edtForgotPassMobile.getText().toString().trim();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("email_quenpass",str_email);
-                bundle.putString("mobile_quenpass",str_mobile);
+            Bundle bundle = new Bundle();
+            bundle.putString("email_quenpass",str_email);
+            bundle.putString("mobile_quenpass",str_mobile);
 
-                if (TextUtils.isEmpty(str_email)) {
-                    Toast.makeText(getApplicationContext(), "Bạn hãy nhập email nhé!", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(str_mobile)) {
-                    Toast.makeText(getApplicationContext(), "Bạn hãy nhập số điện thoại nhé!", Toast.LENGTH_SHORT).show();
-                } else {
-                    progressBar.setVisibility(View.VISIBLE);
-                    compositeDisposable.add(apiApp.quenmatkhau(str_email,str_mobile)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                        progressBar.setVisibility(View.INVISIBLE); // Ẩn progressBar sau khi nhận được phản hồi
-                                        if (userModel.isSuccess()) {
-                                            Intent intent = new Intent(getApplicationContext(), OTPActivity.class);
-                                            intent.putExtra("myString",bundle);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            // Nếu không thành công, in ra thông báo lỗi từ server
-                                            Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    },
-                                    throwable -> {
-                                        // Xử lý lỗi khi không thể kết nối đến server hoặc các lỗi khác
-                                        Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.INVISIBLE); // Ẩn progressBar khi có lỗi
+            if (TextUtils.isEmpty(str_email)) {
+                Toast.makeText(getApplicationContext(), "Bạn hãy nhập email nhé!", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(str_mobile)) {
+                Toast.makeText(getApplicationContext(), "Bạn hãy nhập số điện thoại nhé!", Toast.LENGTH_SHORT).show();
+            } else {
+                progressBar.setVisibility(View.VISIBLE);
+                compositeDisposable.add(apiApp.quenmatkhau(str_email,str_mobile)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                userModel -> {
+                                    progressBar.setVisibility(View.INVISIBLE); // Ẩn progressBar sau khi nhận được phản hồi
+                                    if (userModel.isSuccess()) {
+                                        Intent intent = new Intent(getApplicationContext(), OTPActivity.class);
+                                        intent.putExtra("myString",bundle);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        // Nếu không thành công, in ra thông báo lỗi từ server
+                                        Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
-                            ));
-                }
+                                },
+                                throwable -> {
+                                    // Xử lý lỗi khi không thể kết nối đến server hoặc các lỗi khác
+                                    Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.INVISIBLE); // Ẩn progressBar khi có lỗi
+                                }
+                        ));
             }
         });
     }

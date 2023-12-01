@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    //dagger hilt
+    id("dagger.hilt.android.plugin")
 
 }
 
@@ -81,6 +83,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
+
+    //DAGGER HILT
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    annotationProcessor("com.google.dagger:hilt-android-compiler:2.48.1")
 
 
     implementation("com.google.code.gson:gson:2.10.1")

@@ -7,19 +7,28 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.englishapp.data.repository.UserRepository;
 
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+@HiltViewModel
 public class LoginViewModel extends ViewModel {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     private final UserRepository repository;
     public final ObservableField<String> email = new ObservableField<>();
     public final ObservableField<String> password = new ObservableField<>();
+    public final ObservableField<Boolean> isPasswordShowing = new ObservableField<>(false);
 
+    public final ObservableField<String> savedUsername = new ObservableField<>();
+    public final ObservableField<String> savedPassword = new ObservableField<>();
+    @Inject
     public LoginViewModel(UserRepository repository) {
         this.repository = repository;
     }
 
     public void login(String username, String password) {
+        savedUsername.set(username);
+        savedPassword.set(password);
         compositeDisposable.add(repository.getUser(username, password)
                 .subscribe(userModel -> {
                     if(userModel.isSuccess()){
@@ -34,9 +43,17 @@ public class LoginViewModel extends ViewModel {
                 }));
     }
 
+    public void onClickHidePass() {
+        isPasswordShowing.set(Boolean.FALSE.equals(isPasswordShowing.get()));
+    }
+    public void onClickSignIn() {
+        login(email.get(), password.get());
+    }
     @Override
     protected void onCleared() {
         super.onCleared();
         compositeDisposable.clear();
     }
+
+
 }

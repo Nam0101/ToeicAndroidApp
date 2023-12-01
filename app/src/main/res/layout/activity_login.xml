@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.text.InputType" />
         <variable
             name="loginViewModel"
             type="com.example.englishapp.presentation.viewmodel.LoginViewModel" />
@@ -52,7 +53,7 @@
         android:background="@drawable/drawble_roudback_dark_blue_515">
         <EditText
             android:id="@+id/edtPassWord"
-            android:layout_toStartOf="@+id/IconPassHide"
+            android:layout_toStartOf="@+id/iconPassHide"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Password"
@@ -61,16 +62,17 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textSize="16sp"
-            android:inputType="textPassword"
+            android:inputType="@{loginViewModel.isPasswordShowing.get() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)}"
             android:maxLines="1"/>
         <ImageView
-            android:id="@+id/IconPassHide"
+            android:id="@+id/iconPassHide"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:src="@drawable/hide"
+            android:src="@{loginViewModel.isPasswordShowing.get() ? @drawable/eye : @drawable/hide}"
+            android:onClick="@{()->loginViewModel.onClickHidePass()}"
             android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"/>
     </RelativeLayout>
@@ -91,6 +93,7 @@
         android:layout_marginStart="20dp"
         android:text="Sign In"
         android:textAllCaps="false"
+        android:onClick="@{()->loginViewModel.onClickSignIn()}"
         android:background="@drawable/round_background_primary"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"/>

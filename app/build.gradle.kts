@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    //kapt
+
 }
 
 android {
@@ -34,6 +34,20 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    //buildconfig enable
+    buildFeatures {
+        buildConfig = true
+    }
+    //base url
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
+        }
+        release {
+            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
+        }
+    }
+
 }
 
 dependencies {
@@ -58,9 +72,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
 
     //ROOM
-    implementation("androidx.room:room-runtime:2.6.0")
-    annotationProcessor("androidx.room:room-compiler:2.6.0")
-
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-rxjava3:2.6.1")
     //LIFECYCLE
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
@@ -69,10 +83,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
 
 
-
     implementation("com.google.code.gson:gson:2.10.1")
-
-
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     testImplementation("junit:junit:4.13.2")

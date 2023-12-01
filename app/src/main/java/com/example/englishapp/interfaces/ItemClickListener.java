@@ -1,4 +1,4 @@
-package com.example.englishapp.InterFace;
+package com.example.englishapp.interfaces;
 
 import android.view.View;
 

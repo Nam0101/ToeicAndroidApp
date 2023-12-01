@@ -1,5 +1,6 @@
-package com.example.englishapp.Retrofit;
+package com.example.englishapp.data.remote;
 
+import com.example.englishapp.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,8 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     private static Retrofit instance;
     private static Gson gson;
+    String baseUrl = BuildConfig.BASE_URL;
 
-    public static Retrofit getInstance(String baseUrl) {
+    public static Retrofit getInstance() {
         if (instance == null) {
             gson = new GsonBuilder()
                     .setLenient()
@@ -26,7 +28,7 @@ public class RetrofitClient {
             httpClient.addInterceptor(logging);
 
             instance = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
+                    .baseUrl(BuildConfig.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .client(httpClient.build())

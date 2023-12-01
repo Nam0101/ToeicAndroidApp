@@ -1,17 +1,11 @@
-package com.example.englishapp.Model;
+package com.example.englishapp.data.model;
 
 import java.util.List;
 
-public class CacChnangModel {
-    boolean success;
+public class UserModel {
+    boolean success ;
     String message;
-    List<CacChnang> result;
-
-    public CacChnangModel(boolean success, String message, List<CacChnang> result) {
-        this.success = success;
-        this.message = message;
-        this.result = result;
-    }
+    List<User> result;
 
     public boolean isSuccess() {
         return success;
@@ -29,11 +23,11 @@ public class CacChnangModel {
         this.message = message;
     }
 
-    public List<CacChnang> getResult() {
+    public List<User> getResult() {
         return result;
     }
 
-    public void setResult(List<CacChnang> result) {
+    public void setResult(List<User> result) {
         this.result = result;
     }
 }

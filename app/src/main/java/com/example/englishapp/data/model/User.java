@@ -1,4 +1,4 @@
-package com.example.englishapp.Model;
+package com.example.englishapp.data.model;
 
 public class User {
     int id;

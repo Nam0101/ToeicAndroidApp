@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/thao1"
-    tools:context=".Activity.ChonPartActivity">
+    tools:context=".presentation.activity.ChonPartActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarchonPart"

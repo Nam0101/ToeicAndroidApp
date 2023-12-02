@@ -26,10 +26,12 @@ public class LoginViewModel extends ViewModel {
 
     public final ObservableField<String> savedUsername = new ObservableField<>();
     public final ObservableField<String> savedPassword = new ObservableField<>();
-    public final MutableLiveData<User> loggedInUser = new MutableLiveData<>();
     public final MutableLiveData<Void> navigateToSignUp = new MutableLiveData<>();
     public final MutableLiveData<Void> navigateToForgotPassword = new MutableLiveData<>();
     public final MutableLiveData<String> loginErrorMessage = new MutableLiveData<>();
+
+    public final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    public final MutableLiveData<User> user = new MutableLiveData<>();
 
     @Inject
     public LoginViewModel(LoginUseCase loginUseCase) {
@@ -37,22 +39,37 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String username, String password) {
+        if (username == null || username.isEmpty()) {
+            loginErrorMessage.setValue("Please enter username");
+            return;
+        }
+        if (password == null || password.isEmpty()) {
+            loginErrorMessage.setValue("Please enter password");
+            return;
+        }
+        isLoading.setValue(true);
         savedUsername.set(username);
         savedPassword.set(password);
         Disposable disposable = loginUseCase.execute(username, password)
                 .subscribe(userModel -> {
+                        Log.i("LoginViewModel", "login: " + userModel.isSuccess());
                             if (userModel.isSuccess()) {
                                 loginSuccess.setValue(true);
-                                loggedInUser.setValue(userModel.getResult().get(0));
+                                user.setValue(userModel.getResult().get(0));
                             } else {
                                 loginSuccess.setValue(false);
                                 loginErrorMessage.setValue(userModel.getMessage());
                             }
+                            isLoading.setValue(false);
+                            Log.i("LoginViewModel", "login1: " + userModel.getMessage());
                         }
                         , throwable -> {
-                            Log.e("LoginViewModel", "login: " + throwable.getMessage());
-                            loginErrorMessage.setValue(throwable.getMessage());
+                            if(throwable.getMessage() != null) {
+                                loginErrorMessage.setValue(throwable.getMessage());
+                            }
+                            isLoading.setValue(false);
                     });
+
 
         compositeDisposable.add(disposable);
 

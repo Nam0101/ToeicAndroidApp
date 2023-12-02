@@ -36,9 +36,14 @@ public class LoginActivity extends AppCompatActivity {
         binding.setLoginViewModel(loginViewModel);
         loginViewModel.loginSuccess.observe(this, isSuccess -> {
             if (isSuccess) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                loginViewModel.user.observe(this, user -> {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    if (user != null) {
+                        intent.putExtra("user", user);
+                    }
+                    startActivity(intent);
+                    finish();
+                });
             }
         });
         loginViewModel.navigateToSignUp.observe(this, aVoid -> {
@@ -47,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         });
         
         loginViewModel.navigateToForgotPassword.observe(this, aVoid -> {
-//            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
         });
 
         loginViewModel.loginErrorMessage.observe(this, errorMessage -> {
@@ -57,10 +62,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        loginViewModel.isLoading.observe(this, isLoading -> {
+            if (isLoading) {
+                binding.progressBar.setVisibility(android.view.View.VISIBLE);
+            } else {
+                binding.progressBar.setVisibility(android.view.View.GONE);
+            }
+        });
+
         // Do server không có token nên không thể lưu lại được thông tin đăng nhập
         // Nên mình sẽ lưu lại thông tin đăng nhập vào SharedPreferences
         // Khi mở app lên, mình sẽ lấy thông tin đăng nhập từ SharedPreferences
-        // Nếu có thì mình sẽ tự động đăng nhập
         sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
         String savedUsername = sharedPreferences.getString("username", "");
         String savedPassword = sharedPreferences.getString("password", "");
@@ -68,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(savedUsername) && !TextUtils.isEmpty(savedPassword)) {
             loginViewModel.email.set(savedUsername);
             loginViewModel.password.set(savedPassword);
-//            loginViewModel.login(savedUsername, savedPassword);
         }
     }
     @Override

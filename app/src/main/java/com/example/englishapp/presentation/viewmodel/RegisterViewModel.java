@@ -32,12 +32,13 @@ public class RegisterViewModel extends ViewModel {
     public  CompositeDisposable compositeDisposable = new CompositeDisposable();
     public ObservableField<String> userName = new ObservableField<>();
     public ObservableField<String> password = new ObservableField<>();
+    public ObservableField<String> confirmPassword = new ObservableField<>();
     public ObservableField<String> email = new ObservableField<>();
     public ObservableField<String> mobile = new ObservableField<>();
     public ObservableField<Boolean> isPasswordShowing = new ObservableField<>(false);
     public ObservableField<Boolean> isConfirmPasswordShowing = new ObservableField<>(false);
-    public ObservableField<String> confirmPassword = new ObservableField<>();
-
+    public MutableLiveData<String> message = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public void onClickHidePass() {
         isPasswordShowing.set(Boolean.FALSE.equals(isPasswordShowing.get()));
     }
@@ -51,14 +52,47 @@ public class RegisterViewModel extends ViewModel {
     }
 
     public void onClickSignUp() {
+        if (!checkValidInfo()){
+            return;
+        }
+        isLoading.setValue(true);
         compositeDisposable.add(registerUseCase.execute(userName.get(), password.get(), email.get(), mobile.get())
                 .subscribe(userModel -> {
                     navigateToLogin.setValue(null);
+                    isLoading.setValue(false);
                 }, throwable -> {
                     Log.i("TAG", "onClickSignUp: " + throwable.getMessage());
+                    message.setValue(throwable.getMessage());
                 }));
     }
-
+    private Boolean checkValidInfo(){
+        if (userName.get() == null || userName.get().isEmpty()){
+            message.setValue("Please enter username");
+            return false;
+        }
+        if (password.get() == null || password.get().isEmpty()){
+            message.setValue("Please enter password");
+            return false;
+        }
+        if (confirmPassword.get() == null || confirmPassword.get().isEmpty()){
+            Log.i("TAG", "checkValidInfo: " + confirmPassword.get());
+            message.setValue("Please enter confirm password");
+            return false;
+        }
+        if (email.get() == null || email.get().isEmpty()){
+            message.setValue("Please enter email");
+            return false;
+        }
+        if (mobile.get() == null || mobile.get().isEmpty()){
+            message.setValue("Please enter mobile");
+            return false;
+        }
+        if (!password.get().equals(confirmPassword.get())){
+            message.setValue("Password and confirm password not match");
+            return false;
+        }
+        return true;
+    }
 
 
 }

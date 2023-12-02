@@ -98,6 +98,13 @@
         android:background="@drawable/round_background_primary"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package com.example.englishapp.presentation.activity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,9 +30,19 @@ public class RegisterActivity  extends AppCompatActivity{
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         binding.setRegiterViewModel(registerViewModel);
         registerViewModel.getNavigateToLogin().observe(this, aVoid -> {
-            // Navigate to login screen
             finish();
-
+        });
+        registerViewModel.message.observe(this, message -> {
+            if (message != null && !message.isEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+        registerViewModel.isLoading.observe(this, isLoading -> {
+            if (isLoading) {
+                binding.progressBar.setVisibility(android.view.View.VISIBLE);
+            } else {
+                binding.progressBar.setVisibility(android.view.View.GONE);
+            }
         });
         }
 

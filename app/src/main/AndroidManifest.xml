@@ -31,6 +31,8 @@
         <activity
             android:name=".presentation.activity.MainActivity"
             android:exported="false" />
+        <activity android:name=".presentation.activity.RegisterActivity"/>
+
     </application>
 
 </manifest>

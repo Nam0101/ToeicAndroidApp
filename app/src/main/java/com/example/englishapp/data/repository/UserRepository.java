@@ -9,4 +9,9 @@ public interface UserRepository {
     void insertUser(UserEntity userEntity);
 
     Observable<UserModel> getUser(String username, String password);
+
+    Observable<UserModel> register(String username, String password, String email, String mobile);
+
+    Observable<UserModel> forgotPassword(String email,String mobile);
+
 }

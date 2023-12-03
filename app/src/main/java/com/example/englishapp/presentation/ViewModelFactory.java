@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
+import com.example.englishapp.domain.GetPart5QuestionUseCase;
 import com.example.englishapp.domain.LoginUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
 import com.example.englishapp.presentation.viewmodel.ForgotPasswordViewModel;
 import com.example.englishapp.presentation.viewmodel.LoginViewModel;
 import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
+import com.example.englishapp.presentation.viewmodel.QuizViewModel;
 import com.example.englishapp.presentation.viewmodel.RegisterViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -17,11 +19,13 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private final RegisterUseCase registerUseCase;
     private final ForgotPasswordUseCase forgotPasswordUseCase;
     private final GetFunctionsUseCase getFunctionsUseCase;
-    public ViewModelFactory(LoginUseCase loginUseCase, RegisterUseCase registerUseCase, ForgotPasswordUseCase forgotPasswordUseCase, GetFunctionsUseCase getFunctionsUseCase) {
+    private final GetPart5QuestionUseCase getPart5QuestionUseCase;
+    public ViewModelFactory(LoginUseCase loginUseCase, RegisterUseCase registerUseCase, ForgotPasswordUseCase forgotPasswordUseCase, GetFunctionsUseCase getFunctionsUseCase, GetPart5QuestionUseCase getPart5QuestionUseCase) {
         this.loginUseCase = loginUseCase;
         this.registerUseCase = registerUseCase;
         this.forgotPasswordUseCase = forgotPasswordUseCase;
         this.getFunctionsUseCase = getFunctionsUseCase;
+        this.getPart5QuestionUseCase = getPart5QuestionUseCase;
     }
 
     @Override
@@ -41,6 +45,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         else if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
             // If it's the MainActivityViewModel class, create and return an instance
             return (T) new MainActivityViewModel(getFunctionsUseCase);
+        }
+        else if (modelClass.isAssignableFrom(QuizViewModel.class)) {
+            // If it's the QuizViewModel class, create and return an instance
+            return (T) new QuizViewModel(getPart5QuestionUseCase);
         }
         // Handle other ViewModel classes if necessary
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

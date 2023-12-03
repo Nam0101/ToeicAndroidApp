@@ -1,9 +1,11 @@
 package com.example.englishapp.di;
 
 import com.example.englishapp.data.repository.FunctionRepository;
+import com.example.englishapp.data.repository.Part5QuestionRepository;
 import com.example.englishapp.data.repository.UserRepository;
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
+import com.example.englishapp.domain.GetPart5QuestionUseCase;
 import com.example.englishapp.domain.LoginUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
 
@@ -40,5 +42,11 @@ public class UseCaseModule {
     @Singleton
     public static GetFunctionsUseCase provideGetFunctionsUseCase(FunctionRepository functionRepository){
         return new GetFunctionsUseCase(functionRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static GetPart5QuestionUseCase provideGetPart5QuestionUseCase(Part5QuestionRepository part5QuestionRepository){
+        return new GetPart5QuestionUseCase(part5QuestionRepository);
     }
 }

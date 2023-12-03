@@ -3,6 +3,7 @@ plugins {
     //dagger hilt
     id("dagger.hilt.android.plugin")
 
+
 }
 
 android {

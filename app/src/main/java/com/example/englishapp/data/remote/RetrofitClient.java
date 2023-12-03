@@ -12,12 +12,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit instance;
-    private static Gson gson;
-    String baseUrl = BuildConfig.BASE_URL;
 
     public static Retrofit getInstance() {
         if (instance == null) {
-            gson = new GsonBuilder()
+            Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

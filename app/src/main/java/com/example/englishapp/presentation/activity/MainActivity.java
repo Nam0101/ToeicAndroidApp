@@ -6,12 +6,15 @@ import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.englishapp.R;
 import com.example.englishapp.data.model.Function;
 import com.example.englishapp.databinding.ActivityMainBinding;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
+import com.example.englishapp.presentation.fragment.ChoosePartFragment;
 import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
 
 import java.util.Objects;
@@ -60,15 +63,29 @@ public class MainActivity extends AppCompatActivity {
                 binding.functionRecycleview.setAdapter(functionAdapter);
             }
         });
+        mainActivityViewModel.selectedParts.observe(this, selectedParts -> {
+            if (selectedParts != null && !selectedParts.isEmpty()) {
+                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                intent.putIntegerArrayListExtra("selectedParts", selectedParts);
+                startActivity(intent);
+            }
+        });
     }
 
     private void handleFunctionClick(Function function) {
         switch (function.getId()){
             case 1:
                 // Handle case 1
+                mainActivityViewModel.isFragmentVisible.set(false);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case 2:
-                // Handle case 2
+                mainActivityViewModel.isFragmentVisible.set(true);
+                ChoosePartFragment choosePartFragment = new ChoosePartFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, choosePartFragment)
+                        .commit();
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case 3:
                 // Handle case 3
@@ -83,9 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 // Handle case 6
                 break;
             case 7:
-                // Handle case 7
-                break;
-            case 8:
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

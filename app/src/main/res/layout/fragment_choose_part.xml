@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="mainActivityViewModel"
+            type="com.example.englishapp.presentation.viewmodel.MainActivityViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/thao1"
+    >
+
+    <LinearLayout
+        android:id="@+id/lineTieude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chọn phần thi bạn muốn làm :"
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/blue"/>
+    </LinearLayout>
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/lineTieude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart1Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 1"
+                android:layout_weight="9"
+                android:textSize="15sp"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart2Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 2"
+                android:layout_weight="9"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart3Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 3"
+                android:layout_weight="9"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart4Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 4"
+                android:layout_weight="9"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart5Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 5"
+                android:layout_weight="9"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart6Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 6"
+                android:layout_weight="9"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            >
+            <CheckBox
+                android:id="@+id/checkPart7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={mainActivityViewModel.isPart7Checked}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Part 7"
+                android:layout_weight="9"
+                android:textSize="15sp"/>
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:text="Start"
+            android:textSize="20sp"
+            android:onClick="@{()->mainActivityViewModel.startTest()}"
+            android:textAllCaps="false"
+            android:background="@drawable/round_background_primary"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

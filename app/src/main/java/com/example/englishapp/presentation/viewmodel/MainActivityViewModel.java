@@ -1,5 +1,9 @@
 package com.example.englishapp.presentation.viewmodel;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.PopupMenu;
+
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -34,5 +38,18 @@ public class MainActivityViewModel extends ViewModel {
 
     public void getFunctions(){
         functions.setValue(getFunctionsUseCase.execute());
+    }
+    public void onFunctionClicked() {
+        Log.i("MainActivityViewModel", "onFunctionClicked: ");
+
+
+    }
+
+    private void showPartsMenu(ArrayList<String> parts, View view) {
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+        for (String part : parts) {
+            popupMenu.getMenu().add(part);
+        }
+        popupMenu.show();
     }
 }

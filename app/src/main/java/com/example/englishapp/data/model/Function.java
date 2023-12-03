@@ -11,6 +11,7 @@ public class Function {
         this.imageUrl = imageUrl;
     }
 
+
     public int getId() {
         return id;
     }
@@ -22,4 +23,5 @@ public class Function {
     public String getImageUrl() {
         return imageUrl;
     }
+
 }

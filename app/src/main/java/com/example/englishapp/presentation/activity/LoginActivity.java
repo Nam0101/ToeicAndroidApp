@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
-    LoginViewModel loginViewModel;
-    ActivityLoginBinding binding;
+    private LoginViewModel loginViewModel;
+    private ActivityLoginBinding binding;
     private SharedPreferences sharedPreferences;
     @Inject
     ViewModelFactory viewModelFactory;
@@ -32,47 +33,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
+
+        initializeViewModel();
+        initializeSharedPreferences();
+        observeViewModel();
+    }
+
+    private void initializeViewModel() {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setLoginViewModel(loginViewModel);
-        loginViewModel.loginSuccess.observe(this, isSuccess -> {
-            if (isSuccess) {
-                loginViewModel.user.observe(this, user -> {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    if (user != null) {
-                        intent.putExtra("user", user);
-                    }
-                    startActivity(intent);
-                    finish();
-                });
-            }
-        });
-        loginViewModel.navigateToSignUp.observe(this, aVoid -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
-        });
-        
-        loginViewModel.navigateToForgotPassword.observe(this, aVoid -> {
-            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-            startActivity(intent);
-        });
+    }
 
-        loginViewModel.loginErrorMessage.observe(this, errorMessage -> {
-            if (errorMessage != null && !errorMessage.isEmpty()) {
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        loginViewModel.isLoading.observe(this, isLoading -> {
-            if (isLoading) {
-                binding.progressBar.setVisibility(android.view.View.VISIBLE);
-            } else {
-                binding.progressBar.setVisibility(android.view.View.GONE);
-            }
-        });
-
-        // Do server không có token nên không thể lưu lại được thông tin đăng nhập
-        // Nên mình sẽ lưu lại thông tin đăng nhập vào SharedPreferences
-        // Khi mở app lên, mình sẽ lấy thông tin đăng nhập từ SharedPreferences
+    private void initializeSharedPreferences() {
         sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
         String savedUsername = sharedPreferences.getString("username", "");
         String savedPassword = sharedPreferences.getString("password", "");
@@ -82,6 +54,52 @@ public class LoginActivity extends AppCompatActivity {
             loginViewModel.password.set(savedPassword);
         }
     }
+
+    private void observeViewModel() {
+        loginViewModel.loginSuccess.observe(this, this::handleLoginSuccess);
+        loginViewModel.navigateToSignUp.observe(this, aVoid -> navigateToSignUp());
+        loginViewModel.navigateToForgotPassword.observe(this, aVoid -> navigateToForgotPassword());
+        loginViewModel.loginErrorMessage.observe(this, this::showErrorMessage);
+        loginViewModel.isLoading.observe(this, this::handleLoadingState);
+    }
+
+    private void handleLoginSuccess(Boolean isSuccess) {
+        if (isSuccess) {
+            loginViewModel.user.observe(this, user -> {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                if (user != null) {
+                    intent.putExtra("user", user);
+                }
+                startActivity(intent);
+                finish();
+            });
+        }
+    }
+
+    private void navigateToSignUp() {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    private void navigateToForgotPassword() {
+        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    private void showErrorMessage(String errorMessage) {
+        if (errorMessage != null && !errorMessage.isEmpty()) {
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void handleLoadingState(Boolean isLoading) {
+        if (isLoading) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+        } else {
+            binding.progressBar.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -96,5 +114,4 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("password", loginViewModel.savedPassword.get());
         editor.apply();
     }
-
 }

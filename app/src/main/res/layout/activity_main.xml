@@ -30,12 +30,13 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tb_main"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                app:title="Menu"
-                app:titleTextColor="@color/black"/>
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme" />
+
 
             <TextView
                 android:id="@+id/tv_hello"
@@ -128,8 +129,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -164,7 +165,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="Kết quả luyện thi mới nhất"
@@ -192,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="Thống kê kết quả luyện thi"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -204,10 +205,18 @@
             android:layout_height="match_parent"
             android:layout_gravity="start">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/function_recycleview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/function_recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->mainActivityViewModel.onFunctionClicked()}" />
+
+            </LinearLayout>
 
         </com.google.android.material.navigation.NavigationView>
 

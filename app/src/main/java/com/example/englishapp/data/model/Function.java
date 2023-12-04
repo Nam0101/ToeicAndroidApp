@@ -1,6 +1,11 @@
 package com.example.englishapp.data.model;
 
-public class Function {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Function implements Parcelable {
     private int id;
     private String name;
     private String imageUrl;
@@ -11,6 +16,24 @@ public class Function {
         this.imageUrl = imageUrl;
     }
 
+
+    protected Function(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Creator<Function> CREATOR = new Creator<Function>() {
+        @Override
+        public Function createFromParcel(Parcel in) {
+            return new Function(in);
+        }
+
+        @Override
+        public Function[] newArray(int size) {
+            return new Function[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -24,4 +47,15 @@ public class Function {
         return imageUrl;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(imageUrl);
+    }
 }

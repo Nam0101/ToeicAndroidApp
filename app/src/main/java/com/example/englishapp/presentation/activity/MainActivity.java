@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             if (selectedParts != null && !selectedParts.isEmpty()) {
                 Intent intent = new Intent(MainActivity.this, QuizActivity.class);
                 intent.putIntegerArrayListExtra("selectedParts", selectedParts);
+                //put function list
+                intent.putParcelableArrayListExtra("functions", mainActivityViewModel.functions.getValue());
                 startActivity(intent);
             }
         });

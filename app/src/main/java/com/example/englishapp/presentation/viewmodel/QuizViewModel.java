@@ -27,6 +27,7 @@ public class QuizViewModel extends ViewModel {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public ObservableField<Boolean> isLoading = new ObservableField<>(false);
+    public ObservableField<Boolean> isFragmentVisible = new ObservableField<>(false);
     public void setUserAnswer(int questionNumber, String answer) {
         // Make sure the ArrayList is big enough to store the answer
         while (userAnswers.size() <= questionNumber) {

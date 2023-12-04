@@ -50,6 +50,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             // If it's the QuizViewModel class, create and return an instance
             return (T) new QuizViewModel(getPart5QuestionUseCase);
         }
+
         // Handle other ViewModel classes if necessary
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

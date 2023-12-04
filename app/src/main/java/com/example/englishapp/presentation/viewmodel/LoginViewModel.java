@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.englishapp.data.model.User;
+import com.example.englishapp.domain.CurrentUser;
 import com.example.englishapp.domain.LoginUseCase;
 
 import javax.inject.Inject;
@@ -55,7 +56,8 @@ public class LoginViewModel extends ViewModel {
                         Log.i("LoginViewModel", "login: " + userModel.isSuccess());
                             if (userModel.isSuccess()) {
                                 loginSuccess.setValue(true);
-                                user.setValue(userModel.getResult().get(0));
+                                User currentUser = userModel.getResult().get(0);
+                                CurrentUser.getInstance().setUser(currentUser);
                             } else {
                                 loginSuccess.setValue(false);
                                 loginErrorMessage.setValue(userModel.getMessage());

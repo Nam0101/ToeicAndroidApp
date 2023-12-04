@@ -1,6 +1,5 @@
 package com.example.englishapp.presentation.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,13 @@ import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.englishapp.R;
 import com.example.englishapp.data.model.Part5QuizQuestion;
+import com.example.englishapp.data.model.QuestionResult;
 import com.example.englishapp.databinding.FragmentPart5QuizBinding;
-import com.example.englishapp.presentation.activity.QuizActivity;
+import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
 
 public class QuizFragment extends Fragment {
 
@@ -21,12 +22,14 @@ public class QuizFragment extends Fragment {
     private Part5QuizQuestion question;
     private int position;
     private int selectedAnswer;
+    public QuizSharedViewModel quizSharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPart5QuizBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        quizSharedViewModel = new ViewModelProvider(requireActivity()).get(QuizSharedViewModel.class);
 
         binding.radioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton checkedRadioButton = group.findViewById(checkedId);
@@ -72,10 +75,11 @@ public class QuizFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Intent intent = new Intent(getActivity(), QuizActivity.class);
         int trueAnswer = Integer.parseInt(question.getDapan());
-        intent.putExtra("result", selectedAnswer == trueAnswer);
-        binding = null; // Prevent memory leaks
+        boolean result = selectedAnswer == trueAnswer;
+        QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
+        quizSharedViewModel.addQuestionResult(questionResult);
+        binding = null;
     }
 
     public static QuizFragment newInstance(Part5QuizQuestion question, int position) {

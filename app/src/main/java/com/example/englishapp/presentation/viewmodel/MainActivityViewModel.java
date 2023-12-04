@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.englishapp.data.model.Function;
+import com.example.englishapp.domain.Functions;
 import com.example.englishapp.data.model.User;
 import com.example.englishapp.domain.GetFunctionsUseCase;
 
@@ -23,7 +24,7 @@ public class MainActivityViewModel extends ViewModel {
 
     public ObservableField<Boolean> isFragmentVisible = new ObservableField<>(false);
 
-    private User user;
+    public User user;
     public ObservableField<String> hello = new ObservableField<>();
 
     public ObservableField<Boolean> isPart1Checked = new ObservableField<>(false);
@@ -49,6 +50,7 @@ public class MainActivityViewModel extends ViewModel {
 
     public void getFunctions(){
         functions.setValue(getFunctionsUseCase.execute());
+        Functions.getInstance().setFunctions(functions.getValue());
     }
     public void startTest(){
         ArrayList<Integer> selectedParts = new ArrayList<>();

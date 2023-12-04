@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,11 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.englishapp.R;
 import com.example.englishapp.data.model.Function;
 import com.example.englishapp.databinding.ActivityMainBinding;
+import com.example.englishapp.domain.CurrentUser;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
 import com.example.englishapp.presentation.fragment.ChoosePartFragment;
 import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
-
-import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -33,17 +33,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         initializeViewModel();
         initializeDrawerToggle();
         initializeRecyclerView();
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("isChoosePartFragmentVisible", false)){
+            mainActivityViewModel.isFragmentVisible.set(true);
+            ChoosePartFragment choosePartFragment = new ChoosePartFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, choosePartFragment)
+                    .commit();
+        }
     }
 
     private void initializeViewModel() {
-        Intent loginIntent = getIntent();
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        if (loginIntent != null) {
-            mainActivityViewModel.setUser(Objects.requireNonNull(loginIntent.getParcelableExtra("user")));
+        if(mainActivityViewModel.user == null)
+        {
+            mainActivityViewModel.setUser(CurrentUser.getInstance().getUser());
         }
         binding.setMainActivityViewModel(mainActivityViewModel);
     }
@@ -67,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
             if (selectedParts != null && !selectedParts.isEmpty()) {
                 Intent intent = new Intent(MainActivity.this, QuizActivity.class);
                 intent.putIntegerArrayListExtra("selectedParts", selectedParts);
-                //put function list
-                intent.putParcelableArrayListExtra("functions", mainActivityViewModel.functions.getValue());
                 startActivity(intent);
             }
         });
@@ -77,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     private void handleFunctionClick(Function function) {
         switch (function.getId()){
             case 1:
-                // Handle case 1
                 mainActivityViewModel.isFragmentVisible.set(false);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
                 break;
@@ -102,9 +106,15 @@ public class MainActivity extends AppCompatActivity {
                 // Handle case 6
                 break;
             case 7:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                new AlertDialog.Builder(this)
+                        .setTitle("Đăng xuất")
+                        .setMessage("Bạn có chắc chắn muốn đăng xuất?")
+                        .setNegativeButton("Không", null)
+                        .setPositiveButton("Có", (dialog, which) -> {
+                            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            finish();
+                        }).create().show();
                 break;
         }
     }

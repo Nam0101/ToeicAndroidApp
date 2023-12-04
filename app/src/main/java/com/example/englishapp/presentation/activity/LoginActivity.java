@@ -65,14 +65,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleLoginSuccess(Boolean isSuccess) {
         if (isSuccess) {
-            loginViewModel.user.observe(this, user -> {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                if (user != null) {
-                    intent.putExtra("user", user);
-                }
-                startActivity(intent);
-                finish();
-            });
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

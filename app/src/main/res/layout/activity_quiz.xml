@@ -8,6 +8,9 @@
         <variable
             name="quizViewModel"
             type="com.example.englishapp.presentation.viewmodel.QuizViewModel" />
+        <variable
+            name="quizSharedViewModel"
+            type="com.example.englishapp.presentation.viewmodel.QuizSharedViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -33,6 +36,21 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="@{quizViewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
+            <FrameLayout
+                android:id="@+id/result_fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{quizSharedViewModel.isResultFragmentVisiable.get() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/resultFragment"
+                    android:name="com.example.englishapp.presentation.fragment.PracticeResultFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"

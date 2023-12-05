@@ -54,6 +54,16 @@ public class QuizActivity extends AppCompatActivity {
         quizViewModel = new ViewModelProvider(this).get(QuizViewModel.class);
         quizSharedViewModel = new ViewModelProvider(this).get(QuizSharedViewModel.class);
         binding.setQuizViewModel(quizViewModel);
+        quizSharedViewModel.getQuestionResults().observe(this, questionResults -> {
+            if (questionResults == null || questionResults.isEmpty()) return;
+            quizViewModel.isFragmentVisible.set(false);
+            finish();
+
+            Log.i(TAG, "Test: " + questionResults.size());
+            for(int i = 0; i < questionResults.size(); i++){
+                Log.i(TAG, "Test: " + questionResults.get(i).getSelectedAnswer());
+            }
+        });
     }
 
     private void observeQuizQuestions() {
@@ -64,6 +74,7 @@ public class QuizActivity extends AppCompatActivity {
             binding.viewPager.setAdapter(adapter);
             quizViewModel.isFragmentVisible.set(true);
         });
+        binding.viewPager.setOffscreenPageLimit(5 - 1);
     }
 
     public void onNextButtonClick(View view) {

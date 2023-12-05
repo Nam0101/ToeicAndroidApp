@@ -18,9 +18,9 @@ public class QuizSharedViewModel extends ViewModel {
     }
 
     public void addQuestionResult(QuestionResult result) {
-        Log.i("QuizSharedViewModel", "addQuestionResult: " + result.isCorrect());
-        List<QuestionResult> results = questionResults.getValue();
-        results.add(result);
-        questionResults.setValue(results);
+        List<QuestionResult> currentResults = questionResults.getValue();
+        currentResults.add(result);
+        questionResults.setValue(currentResults);
+        Log.i("QuizSharedViewModel", "addQuestionResultSize: " + questionResults.getValue().size());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.englishapp.presentation.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,7 @@ public class QuizFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.i("QuizFragment", "onDestroyView: " + position);
         int trueAnswer = Integer.parseInt(question.getDapan());
         boolean result = selectedAnswer == trueAnswer;
         QuestionResult questionResult = new QuestionResult(result, selectedAnswer);

@@ -10,15 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.englishapp.R;
 import com.example.englishapp.data.model.Function;
 import com.example.englishapp.databinding.ActivityQuizBinding;
 import com.example.englishapp.domain.Functions;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
 import com.example.englishapp.presentation.adapters.QuizPagerAdapter;
-import com.example.englishapp.presentation.fragment.PracticeResultFragment;
 import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
 import com.example.englishapp.presentation.viewmodel.QuizViewModel;
 
@@ -66,24 +63,9 @@ public class QuizActivity extends AppCompatActivity {
             QuizPagerAdapter adapter = new QuizPagerAdapter(getSupportFragmentManager(), getLifecycle(), part5QuizQuestions);
             binding.viewPager.setAdapter(adapter);
             quizViewModel.isFragmentVisible.set(true);
+            quizSharedViewModel.numberOfQuestion.setValue(part5QuizQuestions.size());
         });
         binding.viewPager.setOffscreenPageLimit(5);
-        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                showResultFragmentIfLastPage(position);
-            }
-        });
-    }
-
-    private void showResultFragmentIfLastPage(int position) {
-        //start fragment result
-        PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
-        if (position == Objects.requireNonNull(quizViewModel.part5QuizQuestions.getValue()).size() - 1) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.result_fragment_container, practiceResultFragment)
-                    .commit();
-        }
 
     }
 
@@ -123,7 +105,6 @@ public class QuizActivity extends AppCompatActivity {
             case 2:
                 handleCase2();
                 break;
-            // Handle other cases...
         }
     }
 
@@ -157,5 +138,4 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    // Handle other cases...
 }

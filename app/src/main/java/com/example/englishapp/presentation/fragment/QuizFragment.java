@@ -48,7 +48,18 @@ public class QuizFragment extends Fragment {
             } else if (selectID == R.id.radioButtonOptionD) {
                 selectedAnswer = 4;
             }
+            int trueAnswer = Integer.parseInt(question.getDapan());
+            boolean result = selectedAnswer == trueAnswer;
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
+            if (position < quizSharedViewModel.questionResults.getValue().size()) {
+                quizSharedViewModel.updateQuestionResult(position, questionResult);
+            } else {
+                quizSharedViewModel.addQuestionResult(questionResult);
+            }
+            Log.i("QuizFragment", "onRadio: " + position);
+            Log.i("QuizFragment", "onRadioSize: " + quizSharedViewModel.questionResults.getValue().size());
         });
+
 
         Bundle args = getArguments();
         if (args != null) {
@@ -56,32 +67,34 @@ public class QuizFragment extends Fragment {
             position = args.getInt("position");
         }
 
-        if(question == null){
+        if (question == null) {
             binding.textViewParagraph.setText("Question not found");
+            return view;
         }
-        else {
-            if(position == 0){
-                binding.buttonBack.setVisibility(View.INVISIBLE);
-            }
-            if(position == 4){
-                binding.buttonNext.setText("Finish");
-                binding.buttonNext.setOnClickListener(v-> {
-                    quizSharedViewModel.calculateScore();
-//                   // Open result fragment
-//                    PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
-//                    requireActivity().getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.result_fragment_container, practiceResultFragment)
-//                            .commit();
-                }
-                );
-            }
-            binding.textViewParagraph.setText(question.getCauhoi());
-            binding.radioButtonOptionA.setText(question.getA());
-            binding.radioButtonOptionB.setText(question.getB());
-            binding.radioButtonOptionC.setText(question.getC());
-            binding.radioButtonOptionD.setText(question.getD());
-            binding.textViewInfo.setText("Part 5 - Question " + (position + 1) + "/" + 5);
+        binding.textViewParagraph.setText(question.getCauhoi());
+        binding.radioButtonOptionA.setText(question.getA());
+        binding.radioButtonOptionB.setText(question.getB());
+        binding.radioButtonOptionC.setText(question.getC());
+        binding.radioButtonOptionD.setText(question.getD());
+        binding.textViewInfo.setText("Part 5 - Question " + (position + 1) + "/" + 5);
+
+
+        if (position == 0) {
+            binding.buttonBack.setVisibility(View.INVISIBLE);
         }
+        if (position == 4) {
+            binding.buttonNext.setText("Finish");
+            binding.buttonNext.setOnClickListener(v -> {
+                        quizSharedViewModel.calculateScore();
+                        quizViewModel.isFragmentVisible.set(false);
+                        PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
+                        requireActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.result_fragment_container, practiceResultFragment)
+                                .commit();
+                    }
+            );
+        }
+
         return view;
     }
 
@@ -91,18 +104,10 @@ public class QuizFragment extends Fragment {
         binding = null;
     }
 
-@Override
-public void onPause() {
-    super.onPause();
-    Log.i("QuizFragment", "onPause: " + position);
-    int trueAnswer = Integer.parseInt(question.getDapan());
-    boolean result = selectedAnswer == trueAnswer;
-    QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
-    quizSharedViewModel.addQuestionResult(questionResult);
-    if(position == 4){
-        quizSharedViewModel.calculateScore();
+    @Override
+    public void onPause() {
+        super.onPause();
     }
-}
 
     public static QuizFragment newInstance(Part5QuizQuestion question, int position) {
         QuizFragment fragment = new QuizFragment();

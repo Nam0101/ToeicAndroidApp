@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
-
         initializeViewModel();
         initializeSharedPreferences();
         observeViewModel();

@@ -46,13 +46,13 @@ android {
         debug {
 //            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
 //            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
-            buildConfigField("String", "BASE_URL", "\"http://192.168.182.95/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
 
         }
         release {
 //            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
 //            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
-            buildConfigField("String", "BASE_URL", "\"http://192.168.182.95/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
         }
     }
 

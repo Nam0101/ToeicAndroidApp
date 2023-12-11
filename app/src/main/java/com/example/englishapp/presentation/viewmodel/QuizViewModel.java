@@ -1,10 +1,12 @@
 package com.example.englishapp.presentation.viewmodel;
 
+import android.util.Log;
+
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.englishapp.data.model.Part5QuizQuestion;
+import com.example.englishapp.data.model.QuizQuestion;
 import com.example.englishapp.domain.GetPart5QuestionUseCase;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class QuizViewModel extends ViewModel {
 
     private final GetPart5QuestionUseCase getPart5QuestionUseCase;
 
-    public MutableLiveData<ArrayList<Part5QuizQuestion>> part5QuizQuestions = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<? extends QuizQuestion>> part5QuizQuestions = new MutableLiveData<>();
     private ArrayList<String> userAnswers = new ArrayList<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -30,32 +32,6 @@ public class QuizViewModel extends ViewModel {
     public ObservableField<Boolean> isFragmentVisible = new ObservableField<>(false);
 
 
-    public void setUserAnswer(int questionNumber, String answer) {
-        // Make sure the ArrayList is big enough to store the answer
-        while (userAnswers.size() <= questionNumber) {
-            userAnswers.add(null);
-        }
-
-        userAnswers.set(questionNumber, answer);
-    }
-    public String getUserAnswer(int questionNumber) {
-        if (questionNumber < userAnswers.size()) {
-            return userAnswers.get(questionNumber);
-        } else {
-            return null;
-        }
-    }
-    public int calculateScore() {
-        int score = 0;
-        for (int i = 0; i < part5QuizQuestions.getValue().size(); i++) {
-            Part5QuizQuestion question = part5QuizQuestions.getValue().get(i);
-            String userAnswer = getUserAnswer(i);
-            if (question.getDapan().equals(userAnswer)) {
-                score++;
-            }
-        }
-        return score;
-    }
     @Inject
     public QuizViewModel(GetPart5QuestionUseCase getPart5QuestionUseCase) {
         this.getPart5QuestionUseCase = getPart5QuestionUseCase;
@@ -64,16 +40,17 @@ public class QuizViewModel extends ViewModel {
 
     public void getPart5Questions(){
         isLoading.set(true);
-        Disposable disposable = getPart5QuestionUseCase.execute(5)
+        Disposable disposable = getPart5QuestionUseCase.execute(30)
                 .subscribeOn(Schedulers.io()) // network call on IO thread
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(part5QuizQuestionModel -> {
-                    if (part5QuizQuestionModel.isSuccess()) {
-                        isLoading.set(false);
-                        part5QuizQuestions.setValue(part5QuizQuestionModel.getResult());
+                .subscribe(quizQuestionModel -> {
+                    isLoading.set(false);
+                    if (quizQuestionModel.isSuccess()) {
+                        part5QuizQuestions.setValue(quizQuestionModel.getResult());
                     }
                 }, throwable -> {
                     isLoading.set(false);
+                    Log.i("QuizViewModel", "getPart5Questions: " + throwable.getMessage());
                 });
 
         compositeDisposable.add(disposable);

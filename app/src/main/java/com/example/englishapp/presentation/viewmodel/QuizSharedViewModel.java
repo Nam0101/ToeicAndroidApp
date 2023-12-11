@@ -16,10 +16,6 @@ public class QuizSharedViewModel extends ViewModel {
     public ObservableField<String> score = new ObservableField<>();
     public ObservableField<String> points = new ObservableField<>();
 
-    public MutableLiveData<List<QuestionResult>> getQuestionResults() {
-        return questionResults;
-    }
-
     public void addQuestionResult(QuestionResult result) {
         List<QuestionResult> currentResults = questionResults.getValue();
         assert currentResults != null;
@@ -41,7 +37,7 @@ public class QuizSharedViewModel extends ViewModel {
     }
 
     public void updateQuestionResult(int position, QuestionResult newResult) {
-        if (position >= 0 && position < questionResults.getValue().size()) {
+        if (position >= 0 && position < Objects.requireNonNull(questionResults.getValue()).size()) {
             questionResults.getValue().set(position, newResult);
             questionResults.setValue(questionResults.getValue()); // Trigger observers
         }

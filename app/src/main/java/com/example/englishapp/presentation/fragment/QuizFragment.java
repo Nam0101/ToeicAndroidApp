@@ -18,6 +18,8 @@ import com.example.englishapp.databinding.FragmentPart5QuizBinding;
 import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
 import com.example.englishapp.presentation.viewmodel.QuizViewModel;
 
+import java.util.Objects;
+
 public class QuizFragment extends Fragment {
 
     private FragmentPart5QuizBinding binding;
@@ -51,7 +53,7 @@ public class QuizFragment extends Fragment {
             int trueAnswer = Integer.parseInt(question.getDapan());
             boolean result = selectedAnswer == trueAnswer;
             QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
-            if (position < quizSharedViewModel.questionResults.getValue().size()) {
+            if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {
                 quizSharedViewModel.addQuestionResult(questionResult);
@@ -76,13 +78,13 @@ public class QuizFragment extends Fragment {
         binding.radioButtonOptionB.setText(question.getB());
         binding.radioButtonOptionC.setText(question.getC());
         binding.radioButtonOptionD.setText(question.getD());
-        binding.textViewInfo.setText("Part 5 - Question " + (position + 1) + "/" + 5);
+        binding.textViewInfo.setText("Part 5 - Question " + (position + 1) + "/" + quizViewModel.part5QuizQuestions.getValue().size());
 
 
         if (position == 0) {
             binding.buttonBack.setVisibility(View.INVISIBLE);
         }
-        if (position == 4) {
+        if (position == quizViewModel.part5QuizQuestions.getValue().size() - 1) {
             binding.buttonNext.setText("Finish");
             binding.buttonNext.setOnClickListener(v -> {
                         quizSharedViewModel.calculateScore();
@@ -97,7 +99,6 @@ public class QuizFragment extends Fragment {
 
         return view;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

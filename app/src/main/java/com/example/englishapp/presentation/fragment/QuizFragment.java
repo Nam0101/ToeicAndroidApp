@@ -16,6 +16,7 @@ import com.example.englishapp.data.model.Part5QuizQuestion;
 import com.example.englishapp.data.model.QuestionResult;
 import com.example.englishapp.databinding.FragmentPart5QuizBinding;
 import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
+import com.example.englishapp.presentation.viewmodel.QuizViewModel;
 
 public class QuizFragment extends Fragment {
 
@@ -24,6 +25,8 @@ public class QuizFragment extends Fragment {
     private int position;
     private int selectedAnswer;
     public QuizSharedViewModel quizSharedViewModel;
+    private QuizViewModel quizViewModel;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -31,6 +34,7 @@ public class QuizFragment extends Fragment {
         binding = FragmentPart5QuizBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         quizSharedViewModel = new ViewModelProvider(requireActivity()).get(QuizSharedViewModel.class);
+        quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
 
         binding.radioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton checkedRadioButton = group.findViewById(checkedId);
@@ -44,7 +48,18 @@ public class QuizFragment extends Fragment {
             } else if (selectID == R.id.radioButtonOptionD) {
                 selectedAnswer = 4;
             }
+            int trueAnswer = Integer.parseInt(question.getDapan());
+            boolean result = selectedAnswer == trueAnswer;
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
+            if (position < quizSharedViewModel.questionResults.getValue().size()) {
+                quizSharedViewModel.updateQuestionResult(position, questionResult);
+            } else {
+                quizSharedViewModel.addQuestionResult(questionResult);
+            }
+            Log.i("QuizFragment", "onRadio: " + position);
+            Log.i("QuizFragment", "onRadioSize: " + quizSharedViewModel.questionResults.getValue().size());
         });
+
 
         Bundle args = getArguments();
         if (args != null) {
@@ -52,36 +67,46 @@ public class QuizFragment extends Fragment {
             position = args.getInt("position");
         }
 
-        if(question == null){
+        if (question == null) {
             binding.textViewParagraph.setText("Question not found");
+            return view;
         }
-        else {
-            if(position == 0){
-                binding.buttonBack.setVisibility(View.INVISIBLE);
-            }
-            if(position == 4){
-                binding.buttonNext.setText("Finish");
-                binding.buttonNext.setOnClickListener(v -> getActivity().finish());
-            }
-            binding.textViewParagraph.setText(question.getCauhoi());
-            binding.radioButtonOptionA.setText(question.getA());
-            binding.radioButtonOptionB.setText(question.getB());
-            binding.radioButtonOptionC.setText(question.getC());
-            binding.radioButtonOptionD.setText(question.getD());
-            binding.textViewInfo.setText("Part 5 - Question " + (position + 1) + "/" + 5);
+        binding.textViewParagraph.setText(question.getCauhoi());
+        binding.radioButtonOptionA.setText(question.getA());
+        binding.radioButtonOptionB.setText(question.getB());
+        binding.radioButtonOptionC.setText(question.getC());
+        binding.radioButtonOptionD.setText(question.getD());
+        binding.textViewInfo.setText("Part 5 - Question " + (position + 1) + "/" + 5);
+
+
+        if (position == 0) {
+            binding.buttonBack.setVisibility(View.INVISIBLE);
         }
+        if (position == 4) {
+            binding.buttonNext.setText("Finish");
+            binding.buttonNext.setOnClickListener(v -> {
+                        quizSharedViewModel.calculateScore();
+                        quizViewModel.isFragmentVisible.set(false);
+                        PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
+                        requireActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.result_fragment_container, practiceResultFragment)
+                                .commit();
+                    }
+            );
+        }
+
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.i("QuizFragment", "onDestroyView: " + position);
-        int trueAnswer = Integer.parseInt(question.getDapan());
-        boolean result = selectedAnswer == trueAnswer;
-        QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
-        quizSharedViewModel.addQuestionResult(questionResult);
         binding = null;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     public static QuizFragment newInstance(Part5QuizQuestion question, int position) {

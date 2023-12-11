@@ -2,6 +2,7 @@ package com.example.englishapp.presentation.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -60,12 +61,13 @@ public class QuizActivity extends AppCompatActivity {
     private void observeQuizQuestions() {
         quizViewModel.part5QuizQuestions.observe(this, part5QuizQuestions -> {
             if (part5QuizQuestions == null || part5QuizQuestions.isEmpty()) return;
+            Log.i(TAG, "observeQuizQuestions: " + part5QuizQuestions.size());
             QuizPagerAdapter adapter = new QuizPagerAdapter(getSupportFragmentManager(), getLifecycle(), part5QuizQuestions);
             binding.viewPager.setAdapter(adapter);
             quizViewModel.isFragmentVisible.set(true);
             quizSharedViewModel.numberOfQuestion.setValue(part5QuizQuestions.size());
         });
-        binding.viewPager.setOffscreenPageLimit(5);
+        binding.viewPager.setOffscreenPageLimit(30);
 
     }
 

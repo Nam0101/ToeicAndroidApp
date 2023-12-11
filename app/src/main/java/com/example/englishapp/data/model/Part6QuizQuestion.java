@@ -5,11 +5,11 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Part5QuizQuestion implements Parcelable, QuizQuestion {
+public class Part6QuizQuestion implements Parcelable,QuizQuestion {
     private String id;
-    private String nam;
-    private String made;
+    private String tende;
     private String cau;
+    private String anh;
     private String cauhoi;
     private String a;
     private String b;
@@ -17,11 +17,24 @@ public class Part5QuizQuestion implements Parcelable, QuizQuestion {
     private String d;
     private String dapan;
 
-    protected Part5QuizQuestion(Parcel in) {
+    public Part6QuizQuestion(String id, String tende, String cau, String anh, String cauhoi, String a, String b, String c, String d, String dapan) {
+        this.id = id;
+        this.tende = tende;
+        this.cau = cau;
+        this.anh = anh;
+        this.cauhoi = cauhoi;
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.dapan = dapan;
+    }
+
+    protected Part6QuizQuestion(Parcel in) {
         id = in.readString();
-        nam = in.readString();
-        made = in.readString();
+        tende = in.readString();
         cau = in.readString();
+        anh = in.readString();
         cauhoi = in.readString();
         a = in.readString();
         b = in.readString();
@@ -30,15 +43,15 @@ public class Part5QuizQuestion implements Parcelable, QuizQuestion {
         dapan = in.readString();
     }
 
-    public static final Creator<Part5QuizQuestion> CREATOR = new Creator<Part5QuizQuestion>() {
+    public static final Creator<Part6QuizQuestion> CREATOR = new Creator<Part6QuizQuestion>() {
         @Override
-        public Part5QuizQuestion createFromParcel(Parcel in) {
-            return new Part5QuizQuestion(in);
+        public Part6QuizQuestion createFromParcel(Parcel in) {
+            return new Part6QuizQuestion(in);
         }
 
         @Override
-        public Part5QuizQuestion[] newArray(int size) {
-            return new Part5QuizQuestion[size];
+        public Part6QuizQuestion[] newArray(int size) {
+            return new Part6QuizQuestion[size];
         }
     };
 
@@ -46,23 +59,21 @@ public class Part5QuizQuestion implements Parcelable, QuizQuestion {
         return id;
     }
 
-    public String getNam() {
-        return nam;
-    }
-
-    public String getMade() {
-        return made;
+    public String getTende() {
+        return tende;
     }
 
     public String getCau() {
         return cau;
     }
 
-    @Override
+    public String getAnh() {
+        return anh;
+    }
+
     public String getCauhoi() {
         return cauhoi;
     }
-
 
     public String getA() {
         return a;
@@ -80,7 +91,6 @@ public class Part5QuizQuestion implements Parcelable, QuizQuestion {
         return d;
     }
 
-    @Override
     public String getDapan() {
         return dapan;
     }
@@ -93,9 +103,9 @@ public class Part5QuizQuestion implements Parcelable, QuizQuestion {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(id);
-        dest.writeString(nam);
-        dest.writeString(made);
+        dest.writeString(tende);
         dest.writeString(cau);
+        dest.writeString(anh);
         dest.writeString(cauhoi);
         dest.writeString(a);
         dest.writeString(b);

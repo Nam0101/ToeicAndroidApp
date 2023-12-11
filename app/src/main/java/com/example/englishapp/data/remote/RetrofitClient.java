@@ -1,6 +1,8 @@
 package com.example.englishapp.data.remote;
 
 import com.example.englishapp.BuildConfig;
+import com.example.englishapp.data.model.QuizQuestionModel;
+import com.example.englishapp.data.model.QuizQuestionModelDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,6 +19,7 @@ public class RetrofitClient {
         if (instance == null) {
             Gson gson = new GsonBuilder()
                     .setLenient()
+                    .registerTypeAdapter(QuizQuestionModel.class, new QuizQuestionModelDeserializer())
                     .create();
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

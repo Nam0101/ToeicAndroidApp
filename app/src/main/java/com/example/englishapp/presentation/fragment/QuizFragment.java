@@ -128,7 +128,22 @@ public class QuizFragment extends Fragment {
             binding.radioButtonOptionD.setText(question.getD());
             Part6QuizQuestion part6Question = (Part6QuizQuestion) question;
             Glide.with(this).load(part6Question.getAnh()).into(binding.imageView2);
-
+            if (position == 0) {
+                binding.buttonBack.setVisibility(View.INVISIBLE);
+            }
+            if (position == quizViewModel.quizQuestions.getValue().size() - 1) {
+                binding.buttonNext.setText("Finish");
+                binding.buttonNext.setOnClickListener(v -> {
+                            quizSharedViewModel.calculateScore();
+                            quizViewModel.isFragmentVisible.set(false);
+                            PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
+                            requireActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.result_fragment_container, practiceResultFragment)
+                                    .commit();
+                        }
+                );
+            }
+            view = binding.getRoot();
 
             view = binding.getRoot();
         }

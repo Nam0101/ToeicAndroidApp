@@ -65,7 +65,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation("io.reactivex.rxjava3:rxjava:3.0.0")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.8")
 
     //RXJAVA
     implementation("com.google.code.gson:gson:2.10.1")

@@ -20,7 +20,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public Observable<QuizQuestionModel> getPart6QuizQuestion(int numOfQuestion) {
-        return null;
+        return questionService.getPart6QuizQuestion(numOfQuestion);
     }
 
 }

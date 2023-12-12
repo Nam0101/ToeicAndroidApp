@@ -6,4 +6,9 @@ public interface QuizQuestion {
     String getCauhoi();
 
     String getDapan();
+    String getA();
+
+    String getB();
+    String getC();
+    String getD();
 }

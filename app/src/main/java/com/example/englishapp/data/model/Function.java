@@ -6,9 +6,9 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Function implements Parcelable {
-    private int id;
-    private String name;
-    private String imageUrl;
+    private final int id;
+    private final String name;
+    private final String imageUrl;
 
     public Function(int id, String name, String imageUrl) {
         this.id = id;

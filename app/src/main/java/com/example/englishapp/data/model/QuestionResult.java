@@ -1,8 +1,8 @@
 package com.example.englishapp.data.model;
 
 public class QuestionResult {
-    private boolean isCorrect;
-    private int selectedAnswer;
+    private final boolean isCorrect;
+    private final int selectedAnswer;
 
     public QuestionResult(boolean isCorrect, int selectedAnswer) {
         this.isCorrect = isCorrect;

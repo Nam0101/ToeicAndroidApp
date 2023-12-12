@@ -6,16 +6,16 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Part5QuizQuestion implements Parcelable, QuizQuestion {
-    private String id;
-    private String nam;
-    private String made;
-    private String cau;
-    private String cauhoi;
-    private String a;
-    private String b;
-    private String c;
-    private String d;
-    private String dapan;
+    private final String id;
+    private final String nam;
+    private final String made;
+    private final String cau;
+    private final String cauhoi;
+    private final String a;
+    private final String b;
+    private final String c;
+    private final String d;
+    private final String dapan;
 
     protected Part5QuizQuestion(Parcel in) {
         id = in.readString();
@@ -63,19 +63,19 @@ public class Part5QuizQuestion implements Parcelable, QuizQuestion {
         return cauhoi;
     }
 
-
+@Override
     public String getA() {
         return a;
     }
-
+@Override
     public String getB() {
         return b;
     }
-
+@Override
     public String getC() {
         return c;
     }
-
+@Override
     public String getD() {
         return d;
     }

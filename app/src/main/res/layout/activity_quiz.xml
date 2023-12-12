@@ -9,15 +9,12 @@
         <variable
             name="quizViewModel"
             type="com.example.englishapp.presentation.viewmodel.QuizViewModel" />
-
-        <variable
-            name="quizSharedViewModel"
-            type="com.example.englishapp.presentation.viewmodel.QuizSharedViewModel" />
     </data>
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -35,17 +32,36 @@
                 android:layout_centerInParent="true"
                 android:visibility="@{quizViewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
+            <TextView
+                android:id="@+id/countdownTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="64dp"
+                android:gravity="center_horizontal"
+                android:layout_marginEnd="-2dp"
+                android:layout_marginBottom="597dp"
+                android:text="@{quizViewModel.countdownTime}"
+                android:textColor="@android:color/black"
+                android:textSize="50sp"
+                android:visibility="@{quizViewModel.isFragmentVisible ? View.VISIBLE : View.GONE}" />
+
             <FrameLayout
                 android:id="@+id/result_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{quizViewModel.isFragmentVisible ? View.GONE : View.VISIBLE}"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+                android:visibility="@{quizViewModel.isFragmentVisible ? View.GONE : View.VISIBLE}" />
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/toolbar"
+                android:layout_below="@id/toolbar"
+                android:layout_marginTop="64dp"
                 android:visibility="@{quizViewModel.isFragmentVisible ? View.VISIBLE : View.GONE}" />
         </RelativeLayout>
         <com.google.android.material.navigation.NavigationView

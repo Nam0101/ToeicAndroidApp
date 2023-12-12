@@ -5,9 +5,9 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 public class QuizQuestionModel {
-    private boolean success;
-    private ArrayList<? extends QuizQuestion> result;
-    private QuizType type;
+    private final boolean success;
+    private final ArrayList<? extends QuizQuestion> result;
+    private final QuizType type;
 
     public QuizQuestionModel(boolean success, ArrayList<? extends QuizQuestion> result, QuizType type) {
         this.success = success;

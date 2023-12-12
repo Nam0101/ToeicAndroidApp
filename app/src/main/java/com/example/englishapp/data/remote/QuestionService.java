@@ -15,4 +15,10 @@ public interface QuestionService {
             @Field("numOfQuestion") int numOfQuestion
     );
 
+    @POST("getPart6QuizQuestion.php")
+    @FormUrlEncoded
+    Observable<QuizQuestionModel> getPart6QuizQuestion(
+            @Field("numOfQuestion") int numOfQuestion
+    );
+
 }

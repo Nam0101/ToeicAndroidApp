@@ -6,6 +6,7 @@ import com.example.englishapp.data.repository.UserRepository;
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
 import com.example.englishapp.domain.GetPart5QuestionUseCase;
+import com.example.englishapp.domain.GetPart6QuestionUseCase;
 import com.example.englishapp.domain.LoginUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
 
@@ -49,4 +50,11 @@ public class UseCaseModule {
     public static GetPart5QuestionUseCase provideGetPart5QuestionUseCase(QuestionRepository part5QuestionRepository){
         return new GetPart5QuestionUseCase(part5QuestionRepository);
     }
+
+    @Provides
+    @Singleton
+    public static GetPart6QuestionUseCase provideGetPart6QuestionUseCase(QuestionRepository part6QuestionRepository){
+        return new GetPart6QuestionUseCase(part6QuestionRepository);
+    }
+
 }

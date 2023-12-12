@@ -17,6 +17,7 @@ import com.example.englishapp.databinding.ActivityQuizBinding;
 import com.example.englishapp.domain.Functions;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
 import com.example.englishapp.presentation.adapters.QuizPagerAdapter;
+import com.example.englishapp.presentation.fragment.PracticeResultFragment;
 import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
 import com.example.englishapp.presentation.viewmodel.QuizViewModel;
 
@@ -28,18 +29,19 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
-    private static final String SELECTED_PARTS_KEY = "selectedParts";
-    private static final String FUNCTIONS_KEY = "functions";
 
     private ActivityQuizBinding binding;
     private QuizViewModel quizViewModel;
     private QuizSharedViewModel quizSharedViewModel;
     private ArrayList<Function> functions;
+    private ArrayList<Integer> selectedParts;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        selectedParts = intent.getIntegerArrayListExtra("selectedParts");
         initializeBinding();
         initializeViewModels();
         observeQuizQuestions();
@@ -59,21 +61,41 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void observeQuizQuestions() {
-        quizViewModel.part5QuizQuestions.observe(this, part5QuizQuestions -> {
+        quizViewModel.quizQuestions.observe(this, part5QuizQuestions -> {
             if (part5QuizQuestions == null || part5QuizQuestions.isEmpty()) return;
             Log.i(TAG, "observeQuizQuestions: " + part5QuizQuestions.size());
             QuizPagerAdapter adapter = new QuizPagerAdapter(getSupportFragmentManager(), getLifecycle(), part5QuizQuestions);
             binding.viewPager.setAdapter(adapter);
+            binding.viewPager.setOffscreenPageLimit(Objects.requireNonNull(quizViewModel.quizQuestions.getValue()).size() - 1);
             quizViewModel.isFragmentVisible.set(true);
             quizSharedViewModel.numberOfQuestion.setValue(part5QuizQuestions.size());
         });
-        binding.viewPager.setOffscreenPageLimit(30);
+        quizViewModel.isQuizTimmerFinished.observe(this, isFinished -> {
+            if(isFinished == null || !isFinished) return;
+            quizSharedViewModel.calculateScore();
+            quizViewModel.isFragmentVisible.set(false);
+            PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(binding.resultFragmentContainer.getId(), practiceResultFragment)
+                    .commit();
+
+        });
+        for(Integer part : selectedParts){
+            switch (part){
+                case 5:
+                    quizViewModel.getPart5Questions();
+                    break;
+                case 6:
+                    quizViewModel.getPart6Questions();
+                    break;
+            }
+        }
 
     }
 
     public void onNextButtonClick(View view) {
         int currentItem = binding.viewPager.getCurrentItem();
-        if (currentItem < Objects.requireNonNull(quizViewModel.part5QuizQuestions.getValue()).size() - 1) {
+        if (currentItem < Objects.requireNonNull(quizViewModel.quizQuestions.getValue()).size() - 1) {
             binding.viewPager.setCurrentItem(currentItem + 1);
         }
     }

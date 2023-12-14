@@ -1,6 +1,8 @@
 package com.example.englishapp.data.remote;
 
 import com.example.englishapp.BuildConfig;
+import com.example.englishapp.data.model.QuizQuestionModel;
+import com.example.englishapp.data.model.QuizQuestionModelDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,13 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit instance;
-    private static Gson gson;
-    String baseUrl = BuildConfig.BASE_URL;
 
     public static Retrofit getInstance() {
         if (instance == null) {
-            gson = new GsonBuilder()
+            Gson gson = new GsonBuilder()
                     .setLenient()
+                    .registerTypeAdapter(QuizQuestionModel.class, new QuizQuestionModelDeserializer())
                     .create();
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

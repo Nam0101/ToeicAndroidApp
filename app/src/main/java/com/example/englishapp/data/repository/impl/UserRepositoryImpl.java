@@ -34,4 +34,18 @@ public class UserRepositoryImpl implements UserRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<UserModel> register(String username, String password, String email, String mobile) {
+        return userService.register(email, password, username, mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<UserModel> forgotPassword(String email,String mobile){
+        return userService.forgotPassword(email, mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

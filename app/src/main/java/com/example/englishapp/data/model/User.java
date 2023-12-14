@@ -1,8 +1,33 @@
 package com.example.englishapp.data.model;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class User implements Parcelable {
     int id;
     String email,pass,username,mobile;
+
+    protected User(Parcel in) {
+        id = in.readInt();
+        email = in.readString();
+        pass = in.readString();
+        username = in.readString();
+        mobile = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -20,14 +45,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -43,4 +60,19 @@ public class User {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(email);
+        dest.writeString(pass);
+        dest.writeString(username);
+        dest.writeString(mobile);
+    }
+
 }

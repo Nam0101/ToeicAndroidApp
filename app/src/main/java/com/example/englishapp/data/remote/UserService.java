@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface UserService {
     @POST("dangki.php")
     @FormUrlEncoded
-    Observable<UserModel> dangki(
+    Observable<UserModel> register(
             @Field("email") String email,
             @Field("pass") String pass,
             @Field("username") String username,
@@ -25,7 +25,7 @@ public interface UserService {
 
     @POST("quenmatkhau.php")
     @FormUrlEncoded
-    Observable<UserModel> quenmatkhau(
+    Observable<UserModel> forgotPassword(
             @Field("email") String email,
             @Field("mobile") String mobile
     );

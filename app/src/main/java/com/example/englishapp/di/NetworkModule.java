@@ -1,5 +1,6 @@
 package com.example.englishapp.di;
 
+import com.example.englishapp.data.remote.QuestionService;
 import com.example.englishapp.data.remote.RetrofitClient;
 import com.example.englishapp.data.remote.UserService;
 
@@ -15,5 +16,9 @@ public class NetworkModule {
     @Provides
     public static UserService provideUserService() {
         return RetrofitClient.getInstance().create(UserService.class);
+    }
+    @Provides
+    public static QuestionService provideQuestionService() {
+        return RetrofitClient.getInstance().create(QuestionService.class);
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:title="Trang chính"
+        android:icon="@drawable/ic_user" />
+    <item
+        android:id="@+id/menu_practice"
+        android:title="Luyện tập"
+        android:icon="@drawable/ic_user" />
+    <item
+        android:id="@+id/menu_test"
+        android:title="Thi thử"
+        android:icon="@drawable/ic_user" />
+    <item
+        android:id="@+id/menu_online_course"
+        android:title="Khóa học online"
+        android:icon="@drawable/ic_user" />
+    <item
+        android:id="@+id/menu_new_word"
+        android:title="Từ mới"
+        android:icon="@drawable/ic_user" />
+    <item
+        android:id="@+id/menu_account"
+        android:title="Tài khoản"
+        android:icon="@drawable/ic_user" />
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Đăng xuất"
+        android:icon="@drawable/ic_user" />
+</menu>

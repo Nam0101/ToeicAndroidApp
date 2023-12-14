@@ -82,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="Forgot Password"
+        android:onClick="@{()->loginViewModel.onClickForgotPass()}"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:textColor="@color/primary"/>
@@ -97,6 +98,13 @@
         android:background="@drawable/round_background_primary"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,12 +153,13 @@
             android:layout_marginStart="20dp"
             android:src="@drawable/google"
             android:adjustViewBounds="true"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sịgn in with Google"
             android:layout_centerInParent="true"
-            android:textStyle="bold"/>
+            android:text="Sign in with Google"
+            android:textStyle="bold" />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -163,14 +172,16 @@
             android:layout_height="wrap_content"
             android:text="Don't have an account ? "
             />
+
         <TextView
             android:id="@+id/btnSigUp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="5dp"
-            android:textColor="@color/primary"
             android:text="Sign Up"
-            android:textStyle="bold"/>
+            android:onClick="@{()->loginViewModel.onClickSignUp()}"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
 </layout>

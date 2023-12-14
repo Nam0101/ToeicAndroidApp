@@ -1,8 +1,13 @@
 package com.example.englishapp.di;
 
 import com.example.englishapp.data.local.dao.UserDao;
+import com.example.englishapp.data.remote.QuestionService;
 import com.example.englishapp.data.remote.UserService;
+import com.example.englishapp.data.repository.FunctionRepository;
+import com.example.englishapp.data.repository.QuestionRepository;
 import com.example.englishapp.data.repository.UserRepository;
+import com.example.englishapp.data.repository.impl.FunctionRepositoryImpl;
+import com.example.englishapp.data.repository.impl.QuestionRepositoryImpl;
 import com.example.englishapp.data.repository.impl.UserRepositoryImpl;
 
 import dagger.Module;
@@ -17,5 +22,13 @@ public class RepositoryModule {
     @Provides
     public static UserRepository provideUserRepository(UserDao userDao, UserService userService) {
         return new UserRepositoryImpl(userDao, userService);
+    }
+    @Provides
+    public static FunctionRepository provideFunctionRepository() {
+        return new FunctionRepositoryImpl();
+    }
+    @Provides
+    public static QuestionRepository providePart5QuestionRepository(QuestionService questionService){
+        return new QuestionRepositoryImpl( questionService);
     }
 }

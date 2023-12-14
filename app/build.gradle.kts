@@ -3,6 +3,7 @@ plugins {
     //dagger hilt
     id("dagger.hilt.android.plugin")
 
+
 }
 
 android {
@@ -43,10 +44,15 @@ android {
     //base url
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
+//            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
+
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
+//            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
         }
     }
 
@@ -59,7 +65,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation("io.reactivex.rxjava3:rxjava:3.0.0")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.8")
 
     //RXJAVA
     implementation("com.google.code.gson:gson:2.10.1")

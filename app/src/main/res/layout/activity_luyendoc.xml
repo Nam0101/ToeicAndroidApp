@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:background="@color/thao1"
     android:layout_height="match_parent"
-    tools:context=".presentation.activity.LuyendocActivity">
+>
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarLuyenDoc"
+        android:id="@+id/toolbar_reading"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -16,23 +16,23 @@
         app:title="Luyện đọc" />
 
     <TextView
-        android:id="@+id/txtCacdemau"
+        android:id="@+id/tv_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:text="Thư viện đề thi"
         android:textColor="@color/red"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toTopOf="@+id/toolbarLuyenDoc"/>
+        app:layout_constraintTop_toTopOf="@+id/toolbar_reading"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp"
-        android:id="@+id/recyclerviewLuyendoc"
+        android:layout_marginStart="8dp"
+        android:id="@+id/recyclerview_reading"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtCacdemau"
+        app:layout_constraintTop_toBottomOf="@+id/tv_menu"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

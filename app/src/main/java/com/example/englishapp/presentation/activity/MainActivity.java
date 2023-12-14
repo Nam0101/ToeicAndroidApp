@@ -1,103 +1,121 @@
 package com.example.englishapp.presentation.activity;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.englishapp.R;
-import com.example.englishapp.data.remote.ApiApp;
-import com.example.englishapp.data.remote.RetrofitClient;
-import com.google.android.material.navigation.NavigationView;
+import com.example.englishapp.data.model.Function;
+import com.example.englishapp.databinding.ActivityMainBinding;
+import com.example.englishapp.domain.CurrentUser;
+import com.example.englishapp.presentation.adapters.FunctionAdapter;
+import com.example.englishapp.presentation.fragment.ChoosePartFragment;
+import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
 
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
-    ListView listViewManhinhchinh;
-    Toolbar toolbarManhinhchinh;
-    NavigationView navigationView;
-    DrawerLayout drawerLayout;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    ApiApp apiApp;
-
-
+    private static final String TAG = "MainActivity";
+    private ActivityMainBinding binding;
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
-        initControl();
-        actionBar();
-        if (isConnected(this)){
-            getChucNang();
-            getEventClick();
-        }else {
-            Toast.makeText(getApplicationContext(), "Không có kết nối internet,vui lòng kiểm tra lại kết nối.", Toast.LENGTH_LONG).show();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        initializeViewModel();
+        initializeDrawerToggle();
+        initializeRecyclerView();
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("isChoosePartFragmentVisible", false)){
+            mainActivityViewModel.isFragmentVisible.set(true);
+            ChoosePartFragment choosePartFragment = new ChoosePartFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, choosePartFragment)
+                    .commit();
         }
     }
 
-    private void getEventClick() {
-        listViewManhinhchinh.setOnItemClickListener((adapterView, view, i, l) -> {
-
-        });
+    private void initializeViewModel() {
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        if(mainActivityViewModel.user == null)
+        {
+            mainActivityViewModel.setUser(CurrentUser.getInstance().getUser());
+        }
+        binding.setMainActivityViewModel(mainActivityViewModel);
     }
 
-    private void getChucNang() {
-
+    private void initializeDrawerToggle() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, 0, 0);
+        binding.drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
-
-    private void actionBar() {
-        setSupportActionBar(toolbarManhinhchinh);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarManhinhchinh.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
-        toolbarManhinhchinh.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
+    private void initializeRecyclerView() {
+        binding.functionRecycleview.setLayoutManager(new LinearLayoutManager(this));
+        mainActivityViewModel.functions.observe(this, functions -> {
+            if (functions != null && !functions.isEmpty()) {
+                binding.functionRecycleview.setVisibility(View.VISIBLE);
+                FunctionAdapter functionAdapter = new FunctionAdapter(functions, this::handleFunctionClick);
+                binding.functionRecycleview.setAdapter(functionAdapter);
             }
         });
-
+        mainActivityViewModel.selectedParts.observe(this, selectedParts -> {
+            if (selectedParts != null && !selectedParts.isEmpty()) {
+                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                intent.putIntegerArrayListExtra("selectedParts", selectedParts);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void initControl() {
-
-    }
-
-    private void initView() {
-
-        listViewManhinhchinh = findViewById(R.id.listViewManHinhChinh);
-        toolbarManhinhchinh = findViewById(R.id.toolbarManhinhchinh);
-        navigationView = findViewById(R.id.navigationView);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        apiApp = RetrofitClient.getInstance().create(ApiApp.class);
-
-        
-    }
-    private boolean isConnected(Context context){
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if((wifi != null && wifi.isConnected()) || (mobile != null && mobile.isConnected())){
-            return true;
-        }else {
-            return false;
+    private void handleFunctionClick(Function function) {
+        switch (function.getId()){
+            case 1:
+                mainActivityViewModel.isFragmentVisible.set(false);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            case 2:
+                mainActivityViewModel.isFragmentVisible.set(true);
+                ChoosePartFragment choosePartFragment = new ChoosePartFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, choosePartFragment)
+                        .commit();
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            case 3:
+                // Handle case 3
+                break;
+            case 4:
+                // Handle case 4
+                break;
+            case 5:
+                // Handle case 5
+                break;
+            case 6:
+                // Handle case 6
+                break;
+            case 7:
+                new AlertDialog.Builder(this)
+                        .setTitle("Đăng xuất")
+                        .setMessage("Bạn có chắc chắn muốn đăng xuất?")
+                        .setNegativeButton("Không", null)
+                        .setPositiveButton("Có", (dialog, which) -> {
+                            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            finish();
+                        }).create().show();
+                break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        compositeDisposable.clear();
-        super.onDestroy();
     }
 }

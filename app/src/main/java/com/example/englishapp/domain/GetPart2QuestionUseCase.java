@@ -1,2 +1,4 @@
-package com.example.englishapp.domain;public class GetPart2QuestionUseCase {
+package com.example.englishapp.domain;
+
+public class GetPart2QuestionUseCase {
 }

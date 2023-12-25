@@ -15,12 +15,14 @@ public class QuizSharedViewModel extends ViewModel {
     public final MutableLiveData<Integer> numberOfQuestion = new MutableLiveData<>(0);
     public ObservableField<String> score = new ObservableField<>();
     public ObservableField<String> points = new ObservableField<>();
+    public final MutableLiveData<List<Integer>> answeredQuestions = new MutableLiveData<>(new ArrayList<>());
 
     public void addQuestionResult(QuestionResult result) {
         List<QuestionResult> currentResults = questionResults.getValue();
         assert currentResults != null;
         currentResults.add(result);
         questionResults.setValue(currentResults);
+
     }
 
     public void calculateScore() {

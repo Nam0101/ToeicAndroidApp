@@ -11,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.englishapp.data.model.Function;
 import com.example.englishapp.databinding.ActivityQuizBinding;
 import com.example.englishapp.domain.Functions;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
+import com.example.englishapp.presentation.adapters.QuestionListAdapter;
 import com.example.englishapp.presentation.adapters.QuizPagerAdapter;
 import com.example.englishapp.presentation.fragment.PracticeResultFragment;
 import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
@@ -61,14 +63,31 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void observeQuizQuestions() {
-        quizViewModel.quizQuestions.observe(this, part5QuizQuestions -> {
-            if (part5QuizQuestions == null || part5QuizQuestions.isEmpty()) return;
-            Log.i(TAG, "observeQuizQuestions: " + part5QuizQuestions.size());
-            QuizPagerAdapter adapter = new QuizPagerAdapter(getSupportFragmentManager(), getLifecycle(), part5QuizQuestions);
+        quizViewModel.quizQuestions.observe(this, quizQuestions -> {
+            if (quizQuestions == null || quizQuestions.isEmpty()) return;
+            quizViewModel.startTimer();
+            Log.i(TAG, "observeQuizQuestions: " + quizQuestions.size());
+            QuizPagerAdapter adapter = new QuizPagerAdapter(getSupportFragmentManager(), getLifecycle(), quizQuestions);
             binding.viewPager.setAdapter(adapter);
             binding.viewPager.setOffscreenPageLimit(Objects.requireNonNull(quizViewModel.quizQuestions.getValue()).size() - 1);
+
             quizViewModel.isFragmentVisible.set(true);
-            quizSharedViewModel.numberOfQuestion.setValue(part5QuizQuestions.size());
+            quizSharedViewModel.numberOfQuestion.setValue(quizQuestions.size());
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            binding.questionListRecyclerView.setLayoutManager(layoutManager);
+            binding.questionListRecyclerView.setVisibility(View.VISIBLE);
+            QuestionListAdapter questionListAdapter = new QuestionListAdapter(quizViewModel.quizQuestions.getValue(), quizSharedViewModel, position -> {
+                binding.viewPager.setCurrentItem(position);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+            }, binding.questionListRecyclerView);
+            binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    super.onPageSelected(position);
+                    questionListAdapter.setSelectedPosition(position);
+                }
+            });
+            binding.questionListRecyclerView.setAdapter(questionListAdapter);
         });
         quizViewModel.isQuizTimmerFinished.observe(this, isFinished -> {
             if(isFinished == null || !isFinished) return;
@@ -81,14 +100,7 @@ public class QuizActivity extends AppCompatActivity {
 
         });
         for(Integer part : selectedParts){
-            switch (part){
-                case 5:
-                    quizViewModel.getPart5Questions();
-                    break;
-                case 6:
-                    quizViewModel.getPart6Questions();
-                    break;
-            }
+            quizViewModel.getQuizQuestions(part);
         }
 
     }
@@ -119,6 +131,8 @@ public class QuizActivity extends AppCompatActivity {
         binding.functionRecycleview.setVisibility(View.VISIBLE);
         FunctionAdapter functionAdapter = new FunctionAdapter(functions, this::handleFunctionClick);
         binding.functionRecycleview.setAdapter(functionAdapter);
+
+
     }
 
     private void handleFunctionClick(Function function) {

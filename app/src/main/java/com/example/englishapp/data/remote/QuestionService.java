@@ -9,6 +9,11 @@ import retrofit2.http.POST;
 
 public interface QuestionService {
 
+    @POST("getPart1QuizQuestion.php")
+    @FormUrlEncoded
+    Observable<QuizQuestionModel> getPart1QuizQuestion(
+            @Field("numOfQuestion") int numOfQuestion
+    );
     @POST("getPart5QuizQuestion.php")
     @FormUrlEncoded
     Observable<QuizQuestionModel> getPart5QuizQuestion(
@@ -18,6 +23,12 @@ public interface QuestionService {
     @POST("getPart6QuizQuestion.php")
     @FormUrlEncoded
     Observable<QuizQuestionModel> getPart6QuizQuestion(
+            @Field("numOfQuestion") int numOfQuestion
+    );
+
+    @POST("getPart7QuizQuestion.php")
+    @FormUrlEncoded
+    Observable<QuizQuestionModel> getPart7QuizQuestion(
             @Field("numOfQuestion") int numOfQuestion
     );
 

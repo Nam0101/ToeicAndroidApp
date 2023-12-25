@@ -1,2 +1,4 @@
-package com.example.englishapp.presentation.fragment;public class QuizPart2Fragment {
+package com.example.englishapp.presentation.fragment;
+
+public class QuizPart2Fragment {
 }

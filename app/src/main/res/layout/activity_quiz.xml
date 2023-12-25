@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -25,6 +24,7 @@
                 android:background="@color/blue"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme" />
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
@@ -32,22 +32,22 @@
                 android:layout_centerInParent="true"
                 android:visibility="@{quizViewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/questionListRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar" />
+
             <TextView
                 android:id="@+id/countdownTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="64dp"
-                android:gravity="center_horizontal"
-                android:layout_marginEnd="-2dp"
-                android:layout_marginBottom="597dp"
+                android:layout_above="@id/result_fragment_container"
+                android:layout_below="@id/questionListRecyclerView"
+                android:gravity="center"
                 android:text="@{quizViewModel.countdownTime}"
                 android:textColor="@android:color/black"
-                android:textSize="50sp"
+                android:textSize="30sp"
                 android:visibility="@{quizViewModel.isFragmentVisible ? View.VISIBLE : View.GONE}" />
 
             <FrameLayout
@@ -60,8 +60,7 @@
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/toolbar"
-                android:layout_marginTop="64dp"
+                android:layout_below="@id/countdownTimer"
                 android:visibility="@{quizViewModel.isFragmentVisible ? View.VISIBLE : View.GONE}" />
         </RelativeLayout>
         <com.google.android.material.navigation.NavigationView

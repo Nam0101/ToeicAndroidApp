@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 // Handle case 5
                 break;
             case 6:
-                // Handle case 6
-                break;
-            case 7:
                 new AlertDialog.Builder(this)
                         .setTitle("Đăng xuất")
                         .setMessage("Bạn có chắc chắn muốn đăng xuất?")

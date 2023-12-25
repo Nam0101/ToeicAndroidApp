@@ -8,13 +8,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.englishapp.data.model.Part5QuizQuestion;
 import com.example.englishapp.data.model.Part6QuizQuestion;
+import com.example.englishapp.data.model.Part7QuizQuestion;
 import com.example.englishapp.data.model.QuizQuestion;
-import com.example.englishapp.presentation.fragment.QuizFragment;
+import com.example.englishapp.presentation.fragment.QuizPart5Fragment;
+import com.example.englishapp.presentation.fragment.QuizPart6Fragment;
+import com.example.englishapp.presentation.fragment.QuizPart7Fragment;
 
 import java.util.ArrayList;
 
 public class QuizPagerAdapter extends FragmentStateAdapter {
-    private ArrayList<? extends QuizQuestion> questions;
+    private final ArrayList<? extends QuizQuestion> questions;
 
     public QuizPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, ArrayList<? extends QuizQuestion> questions) {
         super(fragmentManager, lifecycle);
@@ -24,13 +27,17 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if(questions.get(position) instanceof Part5QuizQuestion){
+        if (questions.get(position) instanceof Part5QuizQuestion) {
             Part5QuizQuestion question = (Part5QuizQuestion) questions.get(position);
-            return QuizFragment.newInstance(question, position);
-        }
-        else{
+            return QuizPart5Fragment.newInstance(question, position);
+        } else if (questions.get(position) instanceof Part6QuizQuestion) {
             Part6QuizQuestion question = (Part6QuizQuestion) questions.get(position);
-            return QuizFragment.newInstance(question, position);
+            return QuizPart6Fragment.newInstance(question, position); // Changed this line
+        } else if (questions.get(position) instanceof Part7QuizQuestion) {
+            Part7QuizQuestion question = (Part7QuizQuestion) questions.get(position);
+            return QuizPart7Fragment.newInstance(question, position); // Changed this line
+        } else {
+            return null;
         }
     }
 

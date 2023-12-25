@@ -18,11 +18,21 @@ public class QuizQuestionModelDeserializer implements JsonDeserializer<QuizQuest
         QuizType type = QuizType.valueOf(jsonObject.get("type").getAsString().toUpperCase());
         Type resultType;
         switch (type){
+            case PART1:
+                resultType = new TypeToken<ArrayList<Part1QuizQuestion>>() {
+                }.getType();
+                break;
             case PART5:
-                resultType = new TypeToken<ArrayList<Part5QuizQuestion>>(){}.getType();
+                resultType = new TypeToken<ArrayList<Part5QuizQuestion>>() {
+                }.getType();
                 break;
             case PART6:
-                resultType = new TypeToken<ArrayList<Part6QuizQuestion>>(){}.getType();
+                resultType = new TypeToken<ArrayList<Part6QuizQuestion>>() {
+                }.getType();
+                break;
+            case PART7:
+                resultType = new TypeToken<ArrayList<Part7QuizQuestion>>() {
+                }.getType();
                 break;
             default:
                 throw new JsonParseException("Unexpected type of quiz question: " + type);

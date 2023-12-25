@@ -12,6 +12,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public QuestionRepositoryImpl(QuestionService questionService) {
         this.questionService = questionService;
     }
+    @Override
+    public Observable<QuizQuestionModel> getPart1QuizQuestion(int numOfQuestion) {
+        return questionService.getPart1QuizQuestion(numOfQuestion);
+    }
 
     @Override
     public Observable<QuizQuestionModel> getPart5QuizQuestion(int numOfQuestion) {
@@ -22,5 +26,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public Observable<QuizQuestionModel> getPart6QuizQuestion(int numOfQuestion) {
         return questionService.getPart6QuizQuestion(numOfQuestion);
     }
+
+    @Override
+    public Observable<QuizQuestionModel> getPart7QuizQuestion(int numOfQuestion) {
+        return questionService.getPart7QuizQuestion(numOfQuestion);
+    }
+
 
 }

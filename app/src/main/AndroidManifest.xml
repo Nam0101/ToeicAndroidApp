@@ -32,7 +32,7 @@
         <activity android:name=".presentation.activity.RegisterActivity"/>
         <activity android:name=".presentation.activity.QuizActivity"/>
         <activity android:name=".presentation.activity.ForgotPasswordActivity"/>
-
+        <activity android:name=".presentation.activity.VocabularyActivity" />
     </application>
 
 

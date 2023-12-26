@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 // Handle case 3
                 break;
             case 4:
-                // Handle case 4
+                Intent intent = new Intent(MainActivity.this, VocabularyActivity.class);
+                startActivity(intent);
                 break;
             case 5:
                 // Handle case 5

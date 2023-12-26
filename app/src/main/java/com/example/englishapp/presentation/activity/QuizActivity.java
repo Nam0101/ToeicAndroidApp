@@ -131,8 +131,6 @@ public class QuizActivity extends AppCompatActivity {
         binding.functionRecycleview.setVisibility(View.VISIBLE);
         FunctionAdapter functionAdapter = new FunctionAdapter(functions, this::handleFunctionClick);
         binding.functionRecycleview.setAdapter(functionAdapter);
-
-
     }
 
     private void handleFunctionClick(Function function) {
@@ -142,6 +140,21 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             case 2:
                 handleCase2();
+                break;
+            case 4:
+                Intent intent = new Intent(QuizActivity.this, VocabularyActivity.class);
+                startActivity(intent);
+                break;
+            case 6:
+                new AlertDialog.Builder(this)
+                        .setTitle("Đăng xuất")
+                        .setMessage("Bạn có chắc chắn muốn đăng xuất?")
+                        .setNegativeButton("Không", null)
+                        .setPositiveButton("Có", (dialog, which) -> {
+                            Intent loginIntent = new Intent(QuizActivity.this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            finish();
+                        }).create().show();
                 break;
         }
     }

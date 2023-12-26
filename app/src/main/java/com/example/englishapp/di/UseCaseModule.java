@@ -3,12 +3,15 @@ package com.example.englishapp.di;
 import com.example.englishapp.data.repository.FunctionRepository;
 import com.example.englishapp.data.repository.QuestionRepository;
 import com.example.englishapp.data.repository.UserRepository;
+import com.example.englishapp.data.repository.VocabularyRepository;
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
 import com.example.englishapp.domain.GetPart1QuestionUseCase;
 import com.example.englishapp.domain.GetPart5QuestionUseCase;
 import com.example.englishapp.domain.GetPart6QuestionUseCase;
 import com.example.englishapp.domain.GetPart7QuestionUseCase;
+import com.example.englishapp.domain.GetTopicUseCase;
+import com.example.englishapp.domain.GetVocabularyByTopicUseCase;
 import com.example.englishapp.domain.LoginUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
 
@@ -70,4 +73,14 @@ public class UseCaseModule {
         return new GetPart7QuestionUseCase(part7QuestionRepository);
     }
 
+    @Provides
+    @Singleton
+    public static GetTopicUseCase provideGetTopicUseCase(VocabularyRepository topicRepository) {
+        return new GetTopicUseCase(topicRepository);
+    }
+    @Provides
+    @Singleton
+    public static GetVocabularyByTopicUseCase provideGetVocabularyByTopicUseCase(VocabularyRepository vocabularyRepository) {
+        return new GetVocabularyByTopicUseCase(vocabularyRepository);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.englishapp.di;
 
+import com.example.englishapp.data.local.dao.TopicDao;
 import com.example.englishapp.data.local.dao.UserDao;
 import com.example.englishapp.data.remote.QuestionService;
 import com.example.englishapp.data.remote.UserService;
@@ -35,7 +36,7 @@ public class RepositoryModule {
         return new QuestionRepositoryImpl( questionService);
     }
     @Provides
-    public static VocabularyRepository provideVocabularyRepository(VocabularyService vocabularyService){
-        return new VocabularyRepositoryImpl( vocabularyService);
+    public static VocabularyRepository provideVocabularyRepository(VocabularyService vocabularyService, TopicDao topicDao){
+        return new VocabularyRepositoryImpl( vocabularyService, topicDao);
     }
 }

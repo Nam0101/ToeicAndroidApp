@@ -18,10 +18,14 @@ import com.example.englishapp.data.model.Part6QuizQuestion;
 import com.example.englishapp.data.model.QuestionResult;
 import com.example.englishapp.data.model.QuizQuestion;
 import com.example.englishapp.databinding.FragmentPart6QuizBinding;
+import com.example.englishapp.domain.CacheManager;
 import com.example.englishapp.presentation.viewmodel.QuizSharedViewModel;
 import com.example.englishapp.presentation.viewmodel.QuizViewModel;
 
+import java.io.File;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class QuizPart6Fragment extends Fragment {
     public QuizSharedViewModel quizSharedViewModel;
@@ -82,8 +86,13 @@ public class QuizPart6Fragment extends Fragment {
         binding.radioButtonOptionC.setText(question.getC());
         binding.radioButtonOptionD.setText(question.getD());
         Part6QuizQuestion part6Question = (Part6QuizQuestion) question;
-        Glide.with(this).load(part6Question.getAnh()).into(binding.imageView2);
-        if (position == 0) {
+        Future<File> future = CacheManager.cacheImageFile(getContext(), part6Question.getAnh());
+        try{
+            File cacheFile = future.get();
+            Glide.with(this).load(cacheFile).into(binding.imageView2);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }        if (position == 0) {
             binding.buttonBack.setVisibility(View.INVISIBLE);
         }
         if (position == quizViewModel.quizQuestions.getValue().size() - 1) {

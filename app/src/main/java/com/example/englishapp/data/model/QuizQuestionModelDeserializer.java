@@ -22,6 +22,18 @@ public class QuizQuestionModelDeserializer implements JsonDeserializer<QuizQuest
                 resultType = new TypeToken<ArrayList<Part1QuizQuestion>>() {
                 }.getType();
                 break;
+            case PART2:
+                resultType = new TypeToken<ArrayList<Part2QuizQuestion>>() {
+                }.getType();
+                break;
+            case PART3:
+                resultType = new TypeToken<ArrayList<Part3QuizQuestion>>() {
+                }.getType();
+                break;
+            case PART4:
+                resultType = new TypeToken<ArrayList<Part4QuizQuestion>>() {
+                }.getType();
+                break;
             case PART5:
                 resultType = new TypeToken<ArrayList<Part5QuizQuestion>>() {
                 }.getType();

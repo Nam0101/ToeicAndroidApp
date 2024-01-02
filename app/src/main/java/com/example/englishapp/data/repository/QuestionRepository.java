@@ -6,7 +6,9 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface QuestionRepository {
     Observable<QuizQuestionModel> getPart1QuizQuestion(int numOfQuestion);
-
+    Observable<QuizQuestionModel> getPart2QuizQuestion(int numOfQuestion);
+    Observable<QuizQuestionModel> getPart3QuizQuestion(int numOfQuestion);
+    Observable<QuizQuestionModel> getPart4QuizQuestion(int numOfQuestion);
     Observable<QuizQuestionModel> getPart5QuizQuestion(int numOfQuestion);
     Observable<QuizQuestionModel> getPart6QuizQuestion(int numOfQuestion);
 

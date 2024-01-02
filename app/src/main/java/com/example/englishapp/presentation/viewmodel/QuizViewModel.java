@@ -141,6 +141,9 @@ public class QuizViewModel extends ViewModel {
     public void getQuizQuestions(int part) {
         Log.i("QuizViewModel", "getQuizQuestions: " + part);
         switch (part) {
+            case 1:
+                getPart1Questions();
+                break;
             case 5:
                 getPart5Questions();
                 break;
@@ -151,5 +154,28 @@ public class QuizViewModel extends ViewModel {
                 getPart7Questions();
                 break;
         }
+    }
+
+    public void getPart1Questions() {
+        isLoading.set(true);
+        Disposable disposable = getPart1QuestionUseCase.execute(30)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(quizQuestionModel -> {
+                    isLoading.set(false);
+                    if (quizQuestionModel.isSuccess()) {
+                        ArrayList<QuizQuestion> currentQuestions = (ArrayList<QuizQuestion>) quizQuestions.getValue();
+                        if (currentQuestions != null) {
+                            currentQuestions.addAll(quizQuestionModel.getResult());
+                        } else {
+                            currentQuestions = new ArrayList<>(quizQuestionModel.getResult());
+                        }
+                        quizQuestions.setValue(currentQuestions);
+                    }
+                }, throwable -> {
+                    isLoading.set(false);
+                });
+
+        compositeDisposable.add(disposable);
     }
 }

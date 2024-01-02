@@ -14,6 +14,21 @@ public interface QuestionService {
     Observable<QuizQuestionModel> getPart1QuizQuestion(
             @Field("numOfQuestion") int numOfQuestion
     );
+    @POST("getPart2QuizQuestion.php")
+    @FormUrlEncoded
+    Observable<QuizQuestionModel> getPart2QuizQuestion(
+            @Field("numOfQuestion") int numOfQuestion
+    );
+    @POST("getPart3QuizQuestion.php")
+    @FormUrlEncoded
+    Observable<QuizQuestionModel> getPart3QuizQuestion(
+            @Field("numOfQuestion") int numOfQuestion
+    );
+    @POST("getPart4QuizQuestion.php")
+    @FormUrlEncoded
+    Observable<QuizQuestionModel> getPart4QuizQuestion(
+            @Field("numOfQuestion") int numOfQuestion
+    );
     @POST("getPart5QuizQuestion.php")
     @FormUrlEncoded
     Observable<QuizQuestionModel> getPart5QuizQuestion(

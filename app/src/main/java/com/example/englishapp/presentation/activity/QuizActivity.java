@@ -44,6 +44,11 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         selectedParts = intent.getIntegerArrayListExtra("selectedParts");
+        if (selectedParts == null || selectedParts.isEmpty()) {
+            Intent mainIntent = new Intent(QuizActivity.this, MainActivity.class);
+            startActivity(mainIntent);
+            finish();
+        }
         initializeBinding();
         initializeViewModels();
         observeQuizQuestions();
@@ -99,6 +104,7 @@ public class QuizActivity extends AppCompatActivity {
                     .commit();
 
         });
+        if (selectedParts == null || selectedParts.isEmpty()) return;
         for(Integer part : selectedParts){
             quizViewModel.getQuizQuestions(part);
         }

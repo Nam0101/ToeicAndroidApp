@@ -12,8 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.englishapp.data.model.Vocabulary;
 import com.example.englishapp.databinding.FragmentBackVocabularyBinding;
+import com.example.englishapp.domain.CacheManager;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class VocabularyBackFragment extends Fragment {
     private static final String ARG_VOCABULARY = "vocabulary";
@@ -45,9 +49,11 @@ public class VocabularyBackFragment extends Fragment {
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
             try {
-                mediaPlayer.setDataSource(vocabulary.getMp3_url());
-                mediaPlayer.prepare(); // might take long! (for buffering, etc)
-            } catch (IOException e) {
+                Future<File> mp3File = CacheManager.cacheMp3File(getContext(), vocabulary.getMp3_url());
+                File cacheFile = mp3File.get();
+                mediaPlayer.setDataSource(cacheFile.getPath());
+                mediaPlayer.prepare();
+            } catch (IOException | ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
             mediaPlayer.start();

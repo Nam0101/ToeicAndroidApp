@@ -44,14 +44,10 @@ android {
     //base url
     buildTypes {
         debug {
-//            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
-//            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
             buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
 
         }
         release {
-//            buildConfigField("String", "BASE_URL", "\"https://nam123.azurewebsites.net/\"")
-//            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
             buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
         }
     }
@@ -61,7 +57,7 @@ android {
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")

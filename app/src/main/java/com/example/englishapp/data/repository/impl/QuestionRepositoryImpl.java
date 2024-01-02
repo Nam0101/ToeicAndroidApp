@@ -16,6 +16,18 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public Observable<QuizQuestionModel> getPart1QuizQuestion(int numOfQuestion) {
         return questionService.getPart1QuizQuestion(numOfQuestion);
     }
+    @Override
+    public Observable<QuizQuestionModel> getPart2QuizQuestion(int numOfQuestion) {
+        return questionService.getPart2QuizQuestion(numOfQuestion);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart3QuizQuestion(int numOfQuestion) {
+        return questionService.getPart3QuizQuestion(numOfQuestion);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart4QuizQuestion(int numOfQuestion) {
+        return questionService.getPart4QuizQuestion(numOfQuestion);
+    }
 
     @Override
     public Observable<QuizQuestionModel> getPart5QuizQuestion(int numOfQuestion) {

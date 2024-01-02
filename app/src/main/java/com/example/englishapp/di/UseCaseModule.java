@@ -7,6 +7,9 @@ import com.example.englishapp.data.repository.VocabularyRepository;
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
 import com.example.englishapp.domain.GetPart1QuestionUseCase;
+import com.example.englishapp.domain.GetPart2QuestionUseCase;
+import com.example.englishapp.domain.GetPart3QuestionUseCase;
+import com.example.englishapp.domain.GetPart4QuestionUseCase;
 import com.example.englishapp.domain.GetPart5QuestionUseCase;
 import com.example.englishapp.domain.GetPart6QuestionUseCase;
 import com.example.englishapp.domain.GetPart7QuestionUseCase;
@@ -54,7 +57,21 @@ public class UseCaseModule {
     public static GetPart1QuestionUseCase provideGetPart1QuestionUseCase(QuestionRepository part1QuestionRepository) {
         return new GetPart1QuestionUseCase(part1QuestionRepository);
     }
-
+    @Provides
+    @Singleton
+    public static GetPart2QuestionUseCase provideGetPart2QuestionUseCase(QuestionRepository part2QuestionRepository) {
+        return new GetPart2QuestionUseCase(part2QuestionRepository);
+    }
+    @Provides
+    @Singleton
+    public static GetPart3QuestionUseCase provideGetPart3QuestionUseCase(QuestionRepository part3QuestionRepository) {
+        return new GetPart3QuestionUseCase(part3QuestionRepository);
+    }
+    @Provides
+    @Singleton
+    public static GetPart4QuestionUseCase provideGetPart4QuestionUseCase(QuestionRepository part4QuestionRepository) {
+        return new GetPart4QuestionUseCase(part4QuestionRepository);
+    }
     @Provides
     @Singleton
     public static GetPart5QuestionUseCase provideGetPart5QuestionUseCase(QuestionRepository part5QuestionRepository) {

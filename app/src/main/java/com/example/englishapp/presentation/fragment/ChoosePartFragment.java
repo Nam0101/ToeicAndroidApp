@@ -16,13 +16,12 @@ import com.example.englishapp.databinding.FragmentChoosePartBinding;
 import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
 
 public class ChoosePartFragment extends Fragment {
-    private MainActivityViewModel mainActivityViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentChoosePartBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_choose_part, container, false);
-        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        MainActivityViewModel mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         binding.setMainActivityViewModel(mainActivityViewModel);
         return binding.getRoot();
     }

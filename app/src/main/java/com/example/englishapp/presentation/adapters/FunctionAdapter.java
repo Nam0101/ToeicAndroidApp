@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.englishapp.R;
 import com.example.englishapp.data.model.Function;
+import com.example.englishapp.domain.CacheManager;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.FunctionViewHolder> {
 
@@ -61,9 +65,13 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
 
         public void bind(Function function) {
             textView.setText(function.getName());
-            Glide.with(imageView.getContext())
-                    .load(function.getImageUrl())
-                    .into(imageView);
+            Future<File> future = CacheManager.cacheImageFile(imageView.getContext(),function.getImageUrl());
+            try{
+                File cacheFile = future.get();
+                Glide.with(imageView.getContext()).load(cacheFile).into(imageView);
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

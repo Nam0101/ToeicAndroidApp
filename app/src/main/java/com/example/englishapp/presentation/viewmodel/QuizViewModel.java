@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.englishapp.data.model.QuizQuestion;
 import com.example.englishapp.domain.GetPart1QuestionUseCase;
+import com.example.englishapp.domain.GetPart2QuestionUseCase;
+import com.example.englishapp.domain.GetPart3QuestionUseCase;
+import com.example.englishapp.domain.GetPart4QuestionUseCase;
 import com.example.englishapp.domain.GetPart5QuestionUseCase;
 import com.example.englishapp.domain.GetPart6QuestionUseCase;
 import com.example.englishapp.domain.GetPart7QuestionUseCase;
@@ -27,9 +30,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class QuizViewModel extends ViewModel {
 
     private final GetPart5QuestionUseCase getPart5QuestionUseCase;
+    private final GetPart2QuestionUseCase getPart2QuestionUseCase;
+    private final GetPart4QuestionUseCase getPart4QuestionUseCase;
     private final GetPart6QuestionUseCase getPart6QuestionUseCase;
     private final GetPart7QuestionUseCase getPart7QuestionUseCase;
     private final GetPart1QuestionUseCase getPart1QuestionUseCase;
+    private final GetPart3QuestionUseCase getPart3QuestionUseCase;
 
     public MutableLiveData<ArrayList<? extends QuizQuestion>> quizQuestions = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -40,11 +46,14 @@ public class QuizViewModel extends ViewModel {
     public MutableLiveData<Boolean> isQuizTimmerFinished = new MutableLiveData<>(false);
 
     @Inject
-    public QuizViewModel(GetPart5QuestionUseCase getPart5QuestionUseCase, GetPart6QuestionUseCase getPart6QuestionUseCase, GetPart7QuestionUseCase getPart7QuestionUseCase, GetPart1QuestionUseCase getPart1QuestionUseCase) {
+    public QuizViewModel(GetPart5QuestionUseCase getPart5QuestionUseCase, GetPart6QuestionUseCase getPart6QuestionUseCase, GetPart7QuestionUseCase getPart7QuestionUseCase, GetPart1QuestionUseCase getPart1QuestionUseCase, GetPart3QuestionUseCase getPart3QuestionUseCase, GetPart2QuestionUseCase getPart2QuestionUseCase, GetPart4QuestionUseCase getPart4QuestionUseCase) {
         this.getPart5QuestionUseCase = getPart5QuestionUseCase;
         this.getPart6QuestionUseCase = getPart6QuestionUseCase;
         this.getPart7QuestionUseCase = getPart7QuestionUseCase;
         this.getPart1QuestionUseCase = getPart1QuestionUseCase;
+        this.getPart3QuestionUseCase = getPart3QuestionUseCase;
+        this.getPart2QuestionUseCase = getPart2QuestionUseCase;
+        this.getPart4QuestionUseCase = getPart4QuestionUseCase;
     }
 
     public void getPart5Questions(){
@@ -58,9 +67,7 @@ public class QuizViewModel extends ViewModel {
                         if (quizQuestionModel.isSuccess()) {
                             ArrayList<QuizQuestion> currentQuestions = (ArrayList<QuizQuestion>) quizQuestions.getValue();
                             if (currentQuestions != null) {
-                                for(QuizQuestion question : quizQuestionModel.getResult()){
-                                    currentQuestions.add(question);
-                                }
+                                currentQuestions.addAll(quizQuestionModel.getResult());
                             } else {
                                 currentQuestions = new ArrayList<>(quizQuestionModel.getResult());
                             }
@@ -74,7 +81,29 @@ public class QuizViewModel extends ViewModel {
 
         compositeDisposable.add(disposable);
     }
+    public void getPart4Questions(){
+        isLoading.set(true);
+        Disposable disposable = getPart4QuestionUseCase.execute(30)
+                .subscribeOn(Schedulers.io()) // network call on IO thread
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(quizQuestionModel -> {
+                    isLoading.set(false);
+                    if (quizQuestionModel.isSuccess()) {
+                        ArrayList<QuizQuestion> currentQuestions = (ArrayList<QuizQuestion>) quizQuestions.getValue();
+                        if (currentQuestions != null) {
+                            currentQuestions.addAll(quizQuestionModel.getResult());
+                        } else {
+                            currentQuestions = new ArrayList<>(quizQuestionModel.getResult());
+                        }
+                        quizQuestions.setValue(currentQuestions);
+                    }
+                }, throwable -> {
+                    isLoading.set(false);
+                    Log.i("QuizViewModel", "getPart4Questions: " + throwable.getMessage());
+                });
 
+        compositeDisposable.add(disposable);
+    }
     public void getPart6Questions(){
         isLoading.set(true);
         Disposable disposable = getPart6QuestionUseCase.execute(30)
@@ -124,8 +153,9 @@ public class QuizViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void startTimer() {
-        CountDownTimer timer = new CountDownTimer(1800000, 1000) {
+    public void startTimer(int time) {
+        if(time == 0) time = 30 * 60 * 1000;
+        CountDownTimer timer = new CountDownTimer(time, 1000) {
             public void onTick(long millisUntilFinished) {
                 String minute = String.valueOf((millisUntilFinished / 1000) / 60);
                 String seconds = String.valueOf((millisUntilFinished / 1000) % 60);
@@ -144,6 +174,15 @@ public class QuizViewModel extends ViewModel {
             case 1:
                 getPart1Questions();
                 break;
+            case 2:
+                getPart2Questions();
+                break;
+            case 4:
+                getPart4Questions();
+                break;
+            case 3:
+                getPart3Question();
+                break;
             case 5:
                 getPart5Questions();
                 break;
@@ -154,6 +193,53 @@ public class QuizViewModel extends ViewModel {
                 getPart7Questions();
                 break;
         }
+    }
+
+    private void getPart2Questions() {
+        isLoading.set(true);
+        Disposable disposable = getPart2QuestionUseCase.execute(30)
+                .subscribeOn(Schedulers.io()) // network call on IO thread
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(quizQuestionModel -> {
+                    isLoading.set(false);
+                    if (quizQuestionModel.isSuccess()) {
+                        ArrayList<QuizQuestion> currentQuestions = (ArrayList<QuizQuestion>) quizQuestions.getValue();
+                        if (currentQuestions != null) {
+                            currentQuestions.addAll(quizQuestionModel.getResult());
+                        } else {
+                            currentQuestions = new ArrayList<>(quizQuestionModel.getResult());
+                        }
+                        quizQuestions.setValue(currentQuestions);
+                    }
+                }, throwable -> {
+                    isLoading.set(false);
+                    Log.i("QuizViewModel", "getPart2Questions: " + throwable.getMessage());
+                });
+        compositeDisposable.add(disposable);
+    }
+
+    private void getPart3Question() {
+        isLoading.set(true);
+        Disposable disposable = getPart3QuestionUseCase.execute(30)
+                .subscribeOn(Schedulers.io()) // network call on IO thread
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(quizQuestionModel -> {
+                    isLoading.set(false);
+                    if (quizQuestionModel.isSuccess()) {
+                        ArrayList<QuizQuestion> currentQuestions = (ArrayList<QuizQuestion>) quizQuestions.getValue();
+                        if (currentQuestions != null) {
+                            currentQuestions.addAll(quizQuestionModel.getResult());
+                        } else {
+                            currentQuestions = new ArrayList<>(quizQuestionModel.getResult());
+                        }
+                        quizQuestions.setValue(currentQuestions);
+                    }
+                }, throwable -> {
+                    isLoading.set(false);
+                    Log.i("QuizViewModel", "getPart3Questions: " + throwable.getMessage());
+                });
+
+        compositeDisposable.add(disposable);
     }
 
     public void getPart1Questions() {

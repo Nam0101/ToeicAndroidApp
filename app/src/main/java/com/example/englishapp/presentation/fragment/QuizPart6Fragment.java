@@ -70,7 +70,7 @@ public class QuizPart6Fragment extends Fragment {
             }
             int trueAnswer = Integer.parseInt(question.getDapan());
             boolean result = selectedAnswer == trueAnswer;
-            QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position);
             if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {

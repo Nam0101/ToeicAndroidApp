@@ -69,7 +69,7 @@ public class QuizPart7Fragment extends Fragment {
             }
             int trueAnswer = Integer.parseInt(question.getDapan());
             boolean result = selectedAnswer == trueAnswer;
-            QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position);
             if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {
@@ -97,6 +97,13 @@ public class QuizPart7Fragment extends Fragment {
         if (position == quizViewModel.quizQuestions.getValue().size() - 1) {
             binding.buttonNext.setText("Finish");
             binding.buttonNext.setOnClickListener(v -> {
+                //find all unanswered questions
+                    for (int i = 0; i < quizViewModel.quizQuestions.getValue().size(); i++) {
+                        if (!quizSharedViewModel.answeredQuestions.getValue().contains(i)) {
+                            QuestionResult questionResult = new QuestionResult(false, 0,false,i);
+                            quizSharedViewModel.addQuestionResult(questionResult);
+                        }
+                    }
                         quizSharedViewModel.calculateScore();
                         quizViewModel.isFragmentVisible.set(false);
                         PracticeResultFragment practiceResultFragment = new PracticeResultFragment();
@@ -105,6 +112,7 @@ public class QuizPart7Fragment extends Fragment {
                                 .commit();
                     }
             );
+
         }
         view = binding.getRoot();
         return view;

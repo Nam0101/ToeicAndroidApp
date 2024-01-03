@@ -39,6 +39,7 @@ public class CacheManager {
     }
 
     public static Future<File> cacheMp3File(Context context, String url) {
+        Log.i("CacheManager", "cacheMp3File: " + url);
         return cacheFile(context, url, getMp3CacheFile(context, url));
     }
 

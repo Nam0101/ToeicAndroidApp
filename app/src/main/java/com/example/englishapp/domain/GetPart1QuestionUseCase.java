@@ -15,4 +15,7 @@ public class GetPart1QuestionUseCase {
     public Observable<QuizQuestionModel> execute(int numOfQuestion) {
         return part1QuestionRepository.getPart1QuizQuestion(numOfQuestion);
     }
+    public Observable<QuizQuestionModel> executeByExamId(int examId) {
+        return part1QuestionRepository.getPart1QuizQuestionByExamId(examId);
+    }
 }

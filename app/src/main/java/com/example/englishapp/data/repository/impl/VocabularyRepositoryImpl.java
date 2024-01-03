@@ -39,7 +39,6 @@ public class VocabularyRepositoryImpl implements VocabularyRepository {
                 for (Topic topic : topicModel.getResult()) {
                     Log.i("TAG", "Inserted: " + topic.getTopic());
                     topicDao.insertTopic(new TopicEntity(topic.getId(), topic.getTopic()));
-
                 }
             }
             return topicModel;

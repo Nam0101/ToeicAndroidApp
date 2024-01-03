@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.englishapp.data.model.Function;
+import com.example.englishapp.data.model.QuizQuestion;
 import com.example.englishapp.databinding.ActivityQuizBinding;
 import com.example.englishapp.domain.Functions;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
@@ -37,23 +38,33 @@ public class QuizActivity extends AppCompatActivity {
     private QuizSharedViewModel quizSharedViewModel;
     private ArrayList<Function> functions;
     private ArrayList<Integer> selectedParts;
-
-
+    ArrayList<? extends QuizQuestion> quizQuestions;
+    int time = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        initializeBinding();
+        initializeViewModels();
         selectedParts = intent.getIntegerArrayListExtra("selectedParts");
-        if (selectedParts == null || selectedParts.isEmpty()) {
+        try{
+            quizQuestions = intent.getParcelableArrayListExtra("quizQuestions");
+            time = intent.getIntExtra("time", 0);
+            quizViewModel.quizQuestions.setValue(quizQuestions);
+            Log.i(TAG, "onCreate: " + Objects.requireNonNull(quizViewModel.quizQuestions.getValue()).size());
+        }
+        catch (Exception e){
+            Log.i(TAG, "onCreate: " + e.getMessage());
+        }
+        if ((selectedParts == null || selectedParts.isEmpty()) && quizViewModel.quizQuestions.getValue() == null) {
             Intent mainIntent = new Intent(QuizActivity.this, MainActivity.class);
             startActivity(mainIntent);
             finish();
         }
-        initializeBinding();
-        initializeViewModels();
-        observeQuizQuestions();
+
         initializeDrawerToggle();
         initializeRecyclerView();
+        observeQuizQuestions();
     }
 
     private void initializeBinding() {
@@ -70,11 +81,11 @@ public class QuizActivity extends AppCompatActivity {
     private void observeQuizQuestions() {
         quizViewModel.quizQuestions.observe(this, quizQuestions -> {
             if (quizQuestions == null || quizQuestions.isEmpty()) return;
-            quizViewModel.startTimer();
-            Log.i(TAG, "observeQuizQuestions: " + quizQuestions.size());
+            quizViewModel.startTimer(time);
+
             QuizPagerAdapter adapter = new QuizPagerAdapter(getSupportFragmentManager(), getLifecycle(), quizQuestions);
             binding.viewPager.setAdapter(adapter);
-            binding.viewPager.setOffscreenPageLimit(Objects.requireNonNull(quizViewModel.quizQuestions.getValue()).size() - 1);
+            binding.viewPager.setOffscreenPageLimit(1);
 
             quizViewModel.isFragmentVisible.set(true);
             quizSharedViewModel.numberOfQuestion.setValue(quizQuestions.size());
@@ -146,6 +157,11 @@ public class QuizActivity extends AppCompatActivity {
                 break;
             case 2:
                 handleCase2();
+                break;
+            case 3:
+                Intent mainIntent = new Intent(QuizActivity.this, ExamActivity.class);
+                startActivity(mainIntent);
+                finish();
                 break;
             case 4:
                 Intent intent = new Intent(QuizActivity.this, VocabularyActivity.class);

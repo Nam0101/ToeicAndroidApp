@@ -23,7 +23,6 @@ public class RetrofitClient {
                     .create();
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-            // Add a logging interceptor to see the raw JSON response in the logcat
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient.addInterceptor(logging);

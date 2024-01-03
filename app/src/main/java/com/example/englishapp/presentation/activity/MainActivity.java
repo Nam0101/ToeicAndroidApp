@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case 3:
-                // Handle case 3
+                Intent intent1 = new Intent(MainActivity.this, ExamActivity.class);
+                startActivity(intent1);
                 break;
             case 4:
                 Intent intent = new Intent(MainActivity.this, VocabularyActivity.class);

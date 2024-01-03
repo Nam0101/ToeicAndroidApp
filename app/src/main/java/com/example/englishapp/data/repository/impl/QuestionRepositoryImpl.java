@@ -1,5 +1,6 @@
 package com.example.englishapp.data.repository.impl;
 
+import com.example.englishapp.data.model.ExamResponse;
 import com.example.englishapp.data.model.QuizQuestionModel;
 import com.example.englishapp.data.remote.QuestionService;
 import com.example.englishapp.data.repository.QuestionRepository;
@@ -44,5 +45,37 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return questionService.getPart7QuizQuestion(numOfQuestion);
     }
 
+    @Override
+    public Observable<ExamResponse> getExam() {
+        return questionService.getExam();
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart1QuizQuestionByExamId(int examId) {
+        return questionService.getPart1QuizQuestionByExamId(examId);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart2QuizQuestionByExamId(int examId) {
+        return questionService.getPart2QuizQuestionByExamId(examId);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart3QuizQuestionByExamId(int examId) {
+        return questionService.getPart3QuizQuestionByExamId(examId);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart4QuizQuestionByExamId(int examId) {
+        return questionService.getPart4QuizQuestionByExamId(examId);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart5QuizQuestionByExamId(int examId) {
+        return questionService.getPart5QuizQuestionByExamId(examId);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart6QuizQuestionByExamId(int examId) {
+        return questionService.getPart6QuizQuestionByExamId(examId);
+    }
+    @Override
+    public Observable<QuizQuestionModel> getPart7QuizQuestionByExamId(int examId) {
+        return questionService.getPart7QuizQuestionByExamId(examId);
+    }
 
 }

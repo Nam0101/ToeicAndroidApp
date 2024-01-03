@@ -12,22 +12,26 @@
 
         <SeekBar
             android:id="@+id/seekBar"
-            android:layout_width="340dp"
+            android:layout_width="330dp"
             android:layout_height="35dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/buttonPlayPause"
+            app:layout_constraintStart_toEndOf="@+id/buttonPlayMusic"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/buttonPlayMusic"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="TODO"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:id="@+id/buttonPlayPause"
-            android:layout_width="41dp"
-            android:layout_height="51dp"
             app:layout_constraintBottom_toBottomOf="@id/seekBar"
             app:layout_constraintEnd_toStartOf="@id/seekBar"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageView
@@ -40,15 +44,28 @@
             app:layout_constraintTop_toBottomOf="@id/seekBar"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+
+
         <RadioGroup
             android:id="@+id/radioGroupOptions"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/buttonNext"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView2">
-
+            <TextView
+                android:id="@+id/textViewQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Question"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.996" />
             <RadioButton
                 android:id="@+id/radioButtonOptionA"
                 android:layout_width="wrap_content"

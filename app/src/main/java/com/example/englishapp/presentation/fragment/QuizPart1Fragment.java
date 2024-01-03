@@ -39,7 +39,7 @@ public class QuizPart1Fragment extends Fragment {
     private QuizViewModel quizViewModel;
     private MediaPlayer mediaPlayer;
     private final Handler handler = new Handler();
-
+    FragmentPart1QuizBinding binding;
     public static QuizPart1Fragment newInstance(QuizQuestion question, int position) {
         QuizPart1Fragment fragment = new QuizPart1Fragment();
         Bundle args = new Bundle();
@@ -60,15 +60,15 @@ public class QuizPart1Fragment extends Fragment {
             question = args.getParcelable("question");
             position = args.getInt("position");
         }
-        FragmentPart1QuizBinding binding = FragmentPart1QuizBinding.inflate(inflater, container, false);
-        setupRadioButtons(binding);
-        setupSeekBar(binding);
-        setupPlayPauseButton(binding);
-        setupNextButton(binding);
+        binding = FragmentPart1QuizBinding.inflate(inflater, container, false);
+        setupRadioButtons();
+        setupSeekBar();
+        setupPlayPauseButton();
+        setupNextButton();
         return binding.getRoot();
     }
 
-    private void setupRadioButtons(FragmentPart1QuizBinding binding) {
+    private void setupRadioButtons() {
         binding.radioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton checkedRadioButton = group.findViewById(checkedId);
             int selectID = checkedRadioButton.getId();
@@ -83,7 +83,7 @@ public class QuizPart1Fragment extends Fragment {
             }
             int trueAnswer = Integer.parseInt(question.getDapan());
             boolean result = selectedAnswer == trueAnswer;
-            QuestionResult questionResult = new QuestionResult(result, selectedAnswer);
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position);
             if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {
@@ -97,7 +97,7 @@ public class QuizPart1Fragment extends Fragment {
         binding.radioButtonOptionD.setText(question.getD());
     }
 
-    private void setupSeekBar(FragmentPart1QuizBinding binding) {
+    private void setupSeekBar() {
         final Runnable updateSeekBar = new Runnable() {
             public void run() {
                 if (mediaPlayer != null && mediaPlayer.isPlaying()) {
@@ -111,22 +111,26 @@ public class QuizPart1Fragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(fromUser) {
-                    mediaPlayer.seekTo(progress);
-                    binding.seekBar.setProgress(progress);
+                    if(mediaPlayer != null){
+                        mediaPlayer.seekTo(progress);
+                        binding.seekBar.setProgress(progress);
+                    }
                 }
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                mediaPlayer.pause();
+                if (mediaPlayer != null && mediaPlayer.isPlaying())
+                    mediaPlayer.pause();
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mediaPlayer.start();
+                if(mediaPlayer != null && !mediaPlayer.isPlaying())
+                    mediaPlayer.start();
             }
         });
     }
 
-    private void setupPlayPauseButton(FragmentPart1QuizBinding binding) {
+    private void setupPlayPauseButton() {
         Part1QuizQuestion part1QuizQuestion = (Part1QuizQuestion) question;
         Future<File> future = CacheManager.cacheImageFile(getContext(), part1QuizQuestion.getAnh());
         try{
@@ -164,7 +168,7 @@ public class QuizPart1Fragment extends Fragment {
         });
     }
 
-    private void setupNextButton(FragmentPart1QuizBinding binding) {
+    private void setupNextButton() {
         if (position == 0) {
             binding.buttonBack.setVisibility(View.INVISIBLE);
         }
@@ -197,6 +201,9 @@ public class QuizPart1Fragment extends Fragment {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
+            //set binding.seekBar.setProgress(0);
+            binding.seekBar.setProgress(0);
+            binding.buttonPlayPause.setImageResource(android.R.drawable.ic_media_play);
             mediaPlayer = null;
         }
     }

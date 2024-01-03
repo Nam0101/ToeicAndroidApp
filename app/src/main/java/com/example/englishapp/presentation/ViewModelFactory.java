@@ -2,7 +2,11 @@ package com.example.englishapp.presentation;
 
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
+import com.example.englishapp.domain.GetListExamUseCase;
 import com.example.englishapp.domain.GetPart1QuestionUseCase;
+import com.example.englishapp.domain.GetPart2QuestionUseCase;
+import com.example.englishapp.domain.GetPart3QuestionUseCase;
+import com.example.englishapp.domain.GetPart4QuestionUseCase;
 import com.example.englishapp.domain.GetPart5QuestionUseCase;
 import com.example.englishapp.domain.GetPart6QuestionUseCase;
 import com.example.englishapp.domain.GetPart7QuestionUseCase;
@@ -23,6 +27,12 @@ public class ViewModelFactory {
     @Inject
     GetFunctionsUseCase getFunctionsUseCase;
     @Inject
+    GetPart2QuestionUseCase getPart2QuestionUseCase;
+    @Inject
+    GetPart3QuestionUseCase getPart3QuestionUseCase;
+    @Inject
+    GetPart4QuestionUseCase getPart4QuestionUseCase;
+    @Inject
     GetPart5QuestionUseCase getPart5QuestionUseCase;
     @Inject
     GetPart6QuestionUseCase getPart6QuestionUseCase;
@@ -34,7 +44,8 @@ public class ViewModelFactory {
     GetTopicUseCase getTopicUseCase;
     @Inject
     GetVocabularyByTopicUseCase getVocabularyByTopicUseCase;
-
+    @Inject
+    GetListExamUseCase getListExamUseCase;
     @Inject
     public ViewModelFactory() {
         // Hilt will automatically inject the UseCases

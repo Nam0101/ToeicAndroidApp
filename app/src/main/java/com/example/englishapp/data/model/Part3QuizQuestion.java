@@ -123,4 +123,21 @@ public class Part3QuizQuestion implements Parcelable, QuizQuestion{
         dest.writeString(dapan);
         dest.writeString(amthanh);
     }
+    @NonNull
+    @Override
+    public String toString() {
+        return "Part3QuizQuestion{" +
+                "id='" + id + '\'' +
+                ", tende='" + tende + '\'' +
+                ", cau='" + cau + '\'' +
+                ", anh='" + anh + '\'' +
+                ", cauhoi='" + cauhoi + '\'' +
+                ", a='" + a + '\'' +
+                ", b='" + b + '\'' +
+                ", d='" + d + '\'' +
+                ", c='" + c + '\'' +
+                ", dapan='" + dapan + '\'' +
+                ", amthanh='" + amthanh + '\'' +
+                '}';
+    }
 }

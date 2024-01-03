@@ -6,6 +6,7 @@ import com.example.englishapp.data.repository.UserRepository;
 import com.example.englishapp.data.repository.VocabularyRepository;
 import com.example.englishapp.domain.ForgotPasswordUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
+import com.example.englishapp.domain.GetListExamUseCase;
 import com.example.englishapp.domain.GetPart1QuestionUseCase;
 import com.example.englishapp.domain.GetPart2QuestionUseCase;
 import com.example.englishapp.domain.GetPart3QuestionUseCase;
@@ -99,5 +100,10 @@ public class UseCaseModule {
     @Singleton
     public static GetVocabularyByTopicUseCase provideGetVocabularyByTopicUseCase(VocabularyRepository vocabularyRepository) {
         return new GetVocabularyByTopicUseCase(vocabularyRepository);
+    }
+    @Provides
+    @Singleton
+    public static GetListExamUseCase provideGetListExamUseCase(QuestionRepository questionRepository) {
+        return new GetListExamUseCase(questionRepository);
     }
 }

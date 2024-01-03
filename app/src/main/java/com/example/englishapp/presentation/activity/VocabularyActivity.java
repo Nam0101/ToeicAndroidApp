@@ -125,6 +125,11 @@ public class VocabularyActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(VocabularyActivity.this, QuizActivity.class);
                 startActivity(intent1);
                 break;
+            case 3:
+                Intent intent2 = new Intent(VocabularyActivity.this, ExamActivity.class);
+                startActivity(intent2);
+                finish();
+                break;
             case 6:
                 new AlertDialog.Builder(this)
                         .setTitle("Đăng xuất")

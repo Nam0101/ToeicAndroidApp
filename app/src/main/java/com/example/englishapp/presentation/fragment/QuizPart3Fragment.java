@@ -38,6 +38,8 @@ public class QuizPart3Fragment  extends Fragment {
     private QuizViewModel quizViewModel;
     private MediaPlayer mediaPlayer;
     private final Handler handler = new Handler();
+    private int trueAnswer=0;
+
     FragmentPart3QuizBinding binding;
     public static QuizPart3Fragment newInstance(QuizQuestion question, int position) {
         QuizPart3Fragment fragment = new QuizPart3Fragment();
@@ -60,6 +62,7 @@ public class QuizPart3Fragment  extends Fragment {
             position = args.getInt("position");
         }
         binding = FragmentPart3QuizBinding.inflate(inflater, container, false);
+        trueAnswer = Integer.parseInt(question.getDapan());
         setupRadioButtons();
         setupSeekBar();
         setupPlayPauseButton();
@@ -83,7 +86,7 @@ public class QuizPart3Fragment  extends Fragment {
             }
             int trueAnswer = Integer.parseInt(question.getDapan());
             boolean result = selectedAnswer == trueAnswer;
-            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position);
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position,trueAnswer);
             if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {

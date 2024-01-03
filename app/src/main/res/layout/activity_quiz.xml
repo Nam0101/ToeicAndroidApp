@@ -54,6 +54,7 @@
                 android:id="@+id/result_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/questionListRecyclerView"
                 android:visibility="@{quizViewModel.isFragmentVisible ? View.GONE : View.VISIBLE}" />
 
             <androidx.viewpager2.widget.ViewPager2

@@ -3,6 +3,7 @@ package com.example.englishapp.presentation.activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -57,6 +58,11 @@ public class ExamActivity extends AppCompatActivity {
                 binding.examRecyclerview.setVisibility(View.VISIBLE);
                 ExamListAdapter examListAdapter = new ExamListAdapter(exams, this::handleExamClick);
                 binding.examRecyclerview.setAdapter(examListAdapter);
+            }
+        });
+        examViewModel.errmsg.observe(this, s -> {
+            if (s != null) {
+                Toast.makeText(this, "No data found for this Test", Toast.LENGTH_SHORT).show();
             }
         });
     }

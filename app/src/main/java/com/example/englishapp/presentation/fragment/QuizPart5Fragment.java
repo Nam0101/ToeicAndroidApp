@@ -28,6 +28,7 @@ public class QuizPart5Fragment extends Fragment {
     private int position;
     private int selectedAnswer;
     private QuizViewModel quizViewModel;
+    private int trueAnswer=0;
 
     public static QuizPart5Fragment newInstance(QuizQuestion question, int position) {
         QuizPart5Fragment fragment = new QuizPart5Fragment();
@@ -49,6 +50,7 @@ public class QuizPart5Fragment extends Fragment {
             question = args.getParcelable("question");
             position = args.getInt("position");
         }
+        trueAnswer = Integer.parseInt(question.getDapan());
         FragmentPart5QuizBinding binding;
         binding = FragmentPart5QuizBinding.inflate(inflater, container, false);
         binding.radioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
@@ -63,9 +65,8 @@ public class QuizPart5Fragment extends Fragment {
             } else if (selectID == R.id.radioButtonOptionD) {
                 selectedAnswer = 4;
             }
-            int trueAnswer = Integer.parseInt(question.getDapan());
             boolean result = selectedAnswer == trueAnswer;
-            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position);
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position,trueAnswer);
             if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {

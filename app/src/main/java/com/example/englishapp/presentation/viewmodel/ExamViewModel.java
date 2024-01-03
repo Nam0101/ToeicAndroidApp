@@ -1,6 +1,5 @@
 package com.example.englishapp.presentation.viewmodel;
 
-import android.os.CountDownTimer;
 import android.util.Log;
 
 import androidx.databinding.ObservableField;
@@ -46,6 +45,7 @@ public class ExamViewModel extends ViewModel {
     public ObservableField<String> countdownTime = new ObservableField<>("Seconds remaining: 60");
 
     public ObservableField<Boolean> isFragmentVisible = new ObservableField<>(false);
+    public MutableLiveData<String> errmsg = new MutableLiveData<>();
     public MutableLiveData<Boolean> isQuizTimmerFinished = new MutableLiveData<>(false);
     public NumberPickerBindingAdapter numberOfQuestion;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -147,6 +147,7 @@ private void handleSuccess(QuizQuestionModel quizQuestionModel) {
 private void handleError(Throwable throwable) {
     Log.i("ExamViewModel", "getQuestionByExamId: " + throwable.getMessage());
     isLoading.set(false);
+    errmsg.postValue(throwable.getMessage());
 }
 
     public void getExamList() {
@@ -167,17 +168,5 @@ private void handleError(Throwable throwable) {
         compositeDisposable.add(disposable);
     }
 
-    public void startTimer() {
-        CountDownTimer timer = new CountDownTimer(1800000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                String minute = String.valueOf((millisUntilFinished / 1000) / 60);
-                String seconds = String.valueOf((millisUntilFinished / 1000) % 60);
-                countdownTime.set(minute + ":" + seconds);
-            }
-            public void onFinish() {
-                countdownTime.set("done!");
-                isQuizTimmerFinished.setValue(true);
-            }
-        }.start();
-    }
+
 }

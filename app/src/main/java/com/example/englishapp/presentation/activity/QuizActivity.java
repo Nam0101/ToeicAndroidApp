@@ -113,7 +113,6 @@ public class QuizActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(binding.resultFragmentContainer.getId(), practiceResultFragment)
                     .commit();
-
         });
         if (selectedParts == null || selectedParts.isEmpty()) return;
         for(Integer part : selectedParts){
@@ -135,7 +134,13 @@ public class QuizActivity extends AppCompatActivity {
             binding.viewPager.setCurrentItem(currentItem - 1);
         }
     }
-
+    public void setCurrentItem(int position) {
+        binding.viewPager.setCurrentItem(position);
+        binding.resultFragmentContainer.setVisibility(View.GONE);
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        binding.viewPager.setVisibility(View.VISIBLE);
+        binding.questionListRecyclerView.setVisibility(View.VISIBLE);
+    }
     private void initializeDrawerToggle() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, 0, 0);
         binding.drawerLayout.addDrawerListener(toggle);

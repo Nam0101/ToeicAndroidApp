@@ -2,6 +2,7 @@ package com.example.englishapp.presentation.fragment;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class QuizPart7Fragment extends Fragment {
     private int position;
     private int selectedAnswer;
     private QuizViewModel quizViewModel;
+    private int trueAnswer=0;
 
     public static QuizPart7Fragment newInstance(QuizQuestion question, int position) {
         QuizPart7Fragment fragment = new QuizPart7Fragment();
@@ -53,6 +55,8 @@ public class QuizPart7Fragment extends Fragment {
             question = args.getParcelable("question");
             position = args.getInt("position");
         }
+        trueAnswer = Integer.parseInt(question.getDapan());
+        Log.i("QuizPart7Fragment", "onCreateView: " + trueAnswer);
         FragmentPart7QuizBinding binding;
         binding = FragmentPart7QuizBinding.inflate(inflater, container, false);
         binding.radioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
@@ -67,9 +71,8 @@ public class QuizPart7Fragment extends Fragment {
             } else if (selectID == R.id.radioButtonOptionD) {
                 selectedAnswer = 4;
             }
-            int trueAnswer = Integer.parseInt(question.getDapan());
-            boolean result = selectedAnswer == trueAnswer;
-            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position);
+            boolean result = (selectedAnswer == trueAnswer);
+            QuestionResult questionResult = new QuestionResult(result, selectedAnswer,true,position,trueAnswer);
             if (position < Objects.requireNonNull(quizSharedViewModel.questionResults.getValue()).size()) {
                 quizSharedViewModel.updateQuestionResult(position, questionResult);
             } else {
@@ -97,13 +100,7 @@ public class QuizPart7Fragment extends Fragment {
         if (position == quizViewModel.quizQuestions.getValue().size() - 1) {
             binding.buttonNext.setText("Finish");
             binding.buttonNext.setOnClickListener(v -> {
-                //find all unanswered questions
-                    for (int i = 0; i < quizViewModel.quizQuestions.getValue().size(); i++) {
-                        if (!quizSharedViewModel.answeredQuestions.getValue().contains(i)) {
-                            QuestionResult questionResult = new QuestionResult(false, 0,false,i);
-                            quizSharedViewModel.addQuestionResult(questionResult);
-                        }
-                    }
+
                         quizSharedViewModel.calculateScore();
                         quizViewModel.isFragmentVisible.set(false);
                         PracticeResultFragment practiceResultFragment = new PracticeResultFragment();

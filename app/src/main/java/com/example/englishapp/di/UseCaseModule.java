@@ -5,6 +5,7 @@ import com.example.englishapp.data.repository.QuestionRepository;
 import com.example.englishapp.data.repository.UserRepository;
 import com.example.englishapp.data.repository.VocabularyRepository;
 import com.example.englishapp.domain.ForgotPasswordUseCase;
+import com.example.englishapp.domain.GetExamDateUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
 import com.example.englishapp.domain.GetListExamUseCase;
 import com.example.englishapp.domain.GetPart1QuestionUseCase;
@@ -16,8 +17,10 @@ import com.example.englishapp.domain.GetPart6QuestionUseCase;
 import com.example.englishapp.domain.GetPart7QuestionUseCase;
 import com.example.englishapp.domain.GetTopicUseCase;
 import com.example.englishapp.domain.GetVocabularyByTopicUseCase;
+import com.example.englishapp.domain.InsertExamHistoryUseCase;
 import com.example.englishapp.domain.LoginUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
+import com.example.englishapp.domain.UpdateExamDateUseCase;
 
 import javax.inject.Singleton;
 
@@ -96,14 +99,34 @@ public class UseCaseModule {
     public static GetTopicUseCase provideGetTopicUseCase(VocabularyRepository topicRepository) {
         return new GetTopicUseCase(topicRepository);
     }
+
     @Provides
     @Singleton
     public static GetVocabularyByTopicUseCase provideGetVocabularyByTopicUseCase(VocabularyRepository vocabularyRepository) {
         return new GetVocabularyByTopicUseCase(vocabularyRepository);
     }
+
     @Provides
     @Singleton
     public static GetListExamUseCase provideGetListExamUseCase(QuestionRepository questionRepository) {
         return new GetListExamUseCase(questionRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static UpdateExamDateUseCase provideUpdateExamDateUseCase(UserRepository userRepository) {
+        return new UpdateExamDateUseCase(userRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static GetExamDateUseCase provideGetExamDateUseCase(UserRepository userRepository) {
+        return new GetExamDateUseCase(userRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static InsertExamHistoryUseCase provideInsertExamHistoryUseCase(QuestionRepository questionRepository) {
+        return new InsertExamHistoryUseCase(questionRepository);
     }
 }

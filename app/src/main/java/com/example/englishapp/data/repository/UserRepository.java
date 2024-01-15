@@ -1,6 +1,7 @@
 package com.example.englishapp.data.repository;
 
 import com.example.englishapp.data.entity.UserEntity;
+import com.example.englishapp.data.model.ExamDateResponse;
 import com.example.englishapp.data.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -12,6 +13,10 @@ public interface UserRepository {
 
     Observable<UserModel> register(String username, String password, String email, String mobile);
 
-    Observable<UserModel> forgotPassword(String email,String mobile);
+    Observable<UserModel> forgotPassword(String email, String mobile);
+
+    Observable<ExamDateResponse> updateExamDate(int user_id, String exam_date);
+
+    Observable<ExamDateResponse> getExamDate(int user_id);
 
 }

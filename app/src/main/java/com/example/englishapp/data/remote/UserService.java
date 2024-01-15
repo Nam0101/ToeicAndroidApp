@@ -1,5 +1,6 @@
 package com.example.englishapp.data.remote;
 
+import com.example.englishapp.data.model.ExamDateResponse;
 import com.example.englishapp.data.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -36,6 +37,7 @@ public interface UserService {
             @Field("email") String email,
             @Field("code") String code
     );
+
     @POST("doimatkhau.php")
     @FormUrlEncoded
     Observable<UserModel> doimatkhau(
@@ -43,5 +45,18 @@ public interface UserService {
             @Field("mobile") String mobile,
             @Field("code") String code,
             @Field("pass") String pass
+    );
+
+    @POST("examDate.php")
+    @FormUrlEncoded
+    Observable<ExamDateResponse> updateExamDate(
+            @Field("user_id") int user_id,
+            @Field("exam_date") String exam_date
+    );
+
+    @POST("getExamDate.php")
+    @FormUrlEncoded
+    Observable<ExamDateResponse> getExamDate(
+            @Field("user_id") int user_id
     );
 }

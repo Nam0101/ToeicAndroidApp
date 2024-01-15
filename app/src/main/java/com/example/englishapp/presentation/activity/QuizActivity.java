@@ -39,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
     private ArrayList<Function> functions;
     private ArrayList<Integer> selectedParts;
     ArrayList<? extends QuizQuestion> quizQuestions;
+    private int examId = 0;
     int time = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,11 @@ public class QuizActivity extends AppCompatActivity {
         initializeBinding();
         initializeViewModels();
         selectedParts = intent.getIntegerArrayListExtra("selectedParts");
-        try{
+        try {
             quizQuestions = intent.getParcelableArrayListExtra("quizQuestions");
             time = intent.getIntExtra("time", 0);
+            examId = intent.getIntExtra("examId", 0);
+            quizSharedViewModel.examId = examId;
             quizViewModel.quizQuestions.setValue(quizQuestions);
             Log.i(TAG, "onCreate: " + Objects.requireNonNull(quizViewModel.quizQuestions.getValue()).size());
         }

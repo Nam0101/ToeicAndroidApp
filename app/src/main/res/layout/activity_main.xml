@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="100 Ngày"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -127,12 +127,14 @@
                             android:textSize="16sp" />
 
                     </LinearLayout>
+
                     <TextView
+                        android:id="@+id/tv_selected_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="1/1/2024"
-                        android:textSize="20sp"
+                        android:text="Chọn ngày dự thi"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
 
@@ -169,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="900"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>

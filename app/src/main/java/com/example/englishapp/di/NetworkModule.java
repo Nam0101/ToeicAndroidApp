@@ -1,5 +1,6 @@
 package com.example.englishapp.di;
 
+import com.example.englishapp.data.remote.ExamService;
 import com.example.englishapp.data.remote.QuestionService;
 import com.example.englishapp.data.remote.RetrofitClient;
 import com.example.englishapp.data.remote.UserService;
@@ -18,12 +19,19 @@ public class NetworkModule {
     public static UserService provideUserService() {
         return RetrofitClient.getInstance().create(UserService.class);
     }
+
     @Provides
     public static QuestionService provideQuestionService() {
         return RetrofitClient.getInstance().create(QuestionService.class);
     }
+
     @Provides
     public static VocabularyService provideVocabularyService() {
         return RetrofitClient.getInstance().create(VocabularyService.class);
+    }
+
+    @Provides
+    public static ExamService provideExamService() {
+        return RetrofitClient.getInstance().create(ExamService.class);
     }
 }

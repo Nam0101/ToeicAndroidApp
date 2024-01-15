@@ -100,6 +100,7 @@ public class ExamActivity extends AppCompatActivity {
                 Intent intent = new Intent(ExamActivity.this, QuizActivity.class);
                 intent.putExtra("quizQuestions", quizQuestions);
                 intent.putExtra("time", 7200000);
+                intent.putExtra("examId", id);
                 startActivity(intent);
             }
         });

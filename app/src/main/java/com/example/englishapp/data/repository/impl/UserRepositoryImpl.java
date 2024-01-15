@@ -2,6 +2,7 @@ package com.example.englishapp.data.repository.impl;
 
 import com.example.englishapp.data.entity.UserEntity;
 import com.example.englishapp.data.local.dao.UserDao;
+import com.example.englishapp.data.model.ExamDateResponse;
 import com.example.englishapp.data.model.UserModel;
 import com.example.englishapp.data.remote.UserService;
 import com.example.englishapp.data.repository.UserRepository;
@@ -42,8 +43,22 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Observable<UserModel> forgotPassword(String email,String mobile){
+    public Observable<UserModel> forgotPassword(String email, String mobile) {
         return userService.forgotPassword(email, mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<ExamDateResponse> updateExamDate(int user_id, String exam_date) {
+        return userService.updateExamDate(user_id, exam_date)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<ExamDateResponse> getExamDate(int user_id) {
+        return userService.getExamDate(user_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

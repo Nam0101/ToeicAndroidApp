@@ -1,7 +1,9 @@
 package com.example.englishapp.data.repository.impl;
 
+import com.example.englishapp.data.model.ExamHistoryResponse;
 import com.example.englishapp.data.model.ExamResponse;
 import com.example.englishapp.data.model.QuizQuestionModel;
+import com.example.englishapp.data.remote.ExamService;
 import com.example.englishapp.data.remote.QuestionService;
 import com.example.englishapp.data.repository.QuestionRepository;
 
@@ -9,10 +11,13 @@ import io.reactivex.rxjava3.core.Observable;
 
 public class QuestionRepositoryImpl implements QuestionRepository {
     private final QuestionService questionService;
+    private final ExamService examService;
 
-    public QuestionRepositoryImpl(QuestionService questionService) {
+    public QuestionRepositoryImpl(QuestionService questionService, ExamService examService) {
         this.questionService = questionService;
+        this.examService = examService;
     }
+
     @Override
     public Observable<QuizQuestionModel> getPart1QuizQuestion(int numOfQuestion) {
         return questionService.getPart1QuizQuestion(numOfQuestion);
@@ -69,13 +74,25 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public Observable<QuizQuestionModel> getPart5QuizQuestionByExamId(int examId) {
         return questionService.getPart5QuizQuestionByExamId(examId);
     }
+
     @Override
     public Observable<QuizQuestionModel> getPart6QuizQuestionByExamId(int examId) {
         return questionService.getPart6QuizQuestionByExamId(examId);
     }
+
     @Override
     public Observable<QuizQuestionModel> getPart7QuizQuestionByExamId(int examId) {
         return questionService.getPart7QuizQuestionByExamId(examId);
+    }
+
+    @Override
+    public Observable<ExamHistoryResponse> insertExamHistory(int userId, int examId, int correctAnswer, int totalQuestion, String timeStamp) {
+        return examService.insertExamHistory(userId, examId, correctAnswer, totalQuestion, timeStamp);
+    }
+
+    @Override
+    public Observable<ExamHistoryResponse> getExamHistory(int userId) {
+        return null;
     }
 
 }

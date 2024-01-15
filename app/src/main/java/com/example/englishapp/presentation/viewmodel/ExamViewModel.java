@@ -49,6 +49,7 @@ public class ExamViewModel extends ViewModel {
     public MutableLiveData<Boolean> isQuizTimmerFinished = new MutableLiveData<>(false);
     public NumberPickerBindingAdapter numberOfQuestion;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    public int examId = 0;
 
     @Inject
     public ExamViewModel(GetListExamUseCase getListExamUseCase,
@@ -71,6 +72,7 @@ public class ExamViewModel extends ViewModel {
     }
 
     public void getQuestionByExamId(int examId) {
+        this.examId = examId;
         isLoading.set(true);
         getPart1Questions(examId);
         getPart2Questions(examId);

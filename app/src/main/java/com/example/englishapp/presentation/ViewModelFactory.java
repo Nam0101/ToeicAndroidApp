@@ -14,6 +14,7 @@ import com.example.englishapp.domain.GetTopicUseCase;
 import com.example.englishapp.domain.GetVocabularyByTopicUseCase;
 import com.example.englishapp.domain.LoginUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
+import com.example.englishapp.domain.UpdateExamDateUseCase;
 
 import javax.inject.Inject;
 
@@ -46,6 +47,9 @@ public class ViewModelFactory {
     GetVocabularyByTopicUseCase getVocabularyByTopicUseCase;
     @Inject
     GetListExamUseCase getListExamUseCase;
+    @Inject
+    UpdateExamDateUseCase updateExamDateUseCase;
+
     @Inject
     public ViewModelFactory() {
         // Hilt will automatically inject the UseCases

@@ -1,5 +1,6 @@
 package com.example.englishapp.presentation.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,11 @@ import com.example.englishapp.domain.CurrentUser;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
 import com.example.englishapp.presentation.fragment.ChoosePartFragment;
 import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -48,11 +54,41 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeViewModel() {
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        if(mainActivityViewModel.user == null)
-        {
+        if (mainActivityViewModel.user == null) {
             mainActivityViewModel.setUser(CurrentUser.getInstance().getUser());
         }
         binding.setMainActivityViewModel(mainActivityViewModel);
+        binding.tvSelectedDate.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+
+            DatePickerDialog picker = new DatePickerDialog(MainActivity.this,
+                    (view1, year1, monthOfYear, dayOfMonth) -> binding.tvSelectedDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1), year, month, day);
+            picker.show();
+            SimpleDateFormat input = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                mainActivityViewModel.newDate.setValue(output.format(input.parse(binding.tvSelectedDate.getText().toString())));
+                mainActivityViewModel.updateSelectedDate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        mainActivityViewModel.selectedDate.observe(this, selectedDate -> {
+            if (selectedDate != null) {
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date date = inputFormat.parse(selectedDate);
+                    String formattedDate = outputFormat.format(date);
+                    binding.tvSelectedDate.setText(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initializeDrawerToggle() {

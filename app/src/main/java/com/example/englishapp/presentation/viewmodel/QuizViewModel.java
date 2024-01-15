@@ -36,7 +36,6 @@ public class QuizViewModel extends ViewModel {
     private final GetPart7QuestionUseCase getPart7QuestionUseCase;
     private final GetPart1QuestionUseCase getPart1QuestionUseCase;
     private final GetPart3QuestionUseCase getPart3QuestionUseCase;
-
     public MutableLiveData<ArrayList<? extends QuizQuestion>> quizQuestions = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     public ObservableField<String> countdownTime = new ObservableField<>("Seconds remaining: 60");

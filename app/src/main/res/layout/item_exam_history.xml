@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="7dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="6dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/txtTende"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ETS 23 TOEIC Test 1"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Kết quả: 25/30"/>
+        <TextView
+            android:id="@+id/tv_exam_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ngày thi : 11/01/2024"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

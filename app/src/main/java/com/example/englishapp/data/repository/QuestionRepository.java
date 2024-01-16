@@ -35,5 +35,7 @@ public interface QuestionRepository {
 
     Observable<ExamHistoryResponse> insertExamHistory(int userId, int examId, int correctAnswer, int totalQuestion, String timeStamp);
 
+    Observable<ExamHistoryResponse> getExamHistory(int userId);
+
     // get exam history
 }

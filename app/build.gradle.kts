@@ -44,11 +44,10 @@ android {
     //base url
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
-
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.243/tienganh/\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.120/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.243/tienganh/\"")
         }
     }
 
@@ -81,10 +80,10 @@ dependencies {
     implementation("androidx.room:room-rxjava3:2.6.1")
     //LIFECYCLE
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
 
     //DAGGER HILT
     implementation("com.google.dagger:hilt-android:2.48.1")

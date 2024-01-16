@@ -1,6 +1,7 @@
 package com.example.englishapp.data.remote;
 
 import com.example.englishapp.data.model.ExamDateResponse;
+import com.example.englishapp.data.model.GetExamHistoryResponse;
 import com.example.englishapp.data.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -58,5 +59,11 @@ public interface UserService {
     @FormUrlEncoded
     Observable<ExamDateResponse> getExamDate(
             @Field("user_id") int user_id
+    );
+
+    @POST("getExamHistory.php")
+    @FormUrlEncoded
+    Observable<GetExamHistoryResponse> getExamHistory(
+            @Field("user_id") int userId
     );
 }

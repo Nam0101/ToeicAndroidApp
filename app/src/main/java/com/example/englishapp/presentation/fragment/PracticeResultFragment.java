@@ -39,7 +39,17 @@ public class PracticeResultFragment extends Fragment {
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();
         String examDate = currentDate.toString();
+        //convert date to YYYY/MM/DD like 2021/05/20
+        String[] date = examDate.split(" ");
+        //convert date[1] to number
+        String month = monthTextToNumber(date[1]);
+        examDate = date[5] + "/" + month + "/" + date[2];
         int exam_id = quizSharedViewModel.examId;
+        Log.i("PracticeResultFragment", "onCreateView: exam_id" + exam_id);
+        Log.i("PracticeResultFragment", "onCreateView: user_id" + user_id);
+        Log.i("PracticeResultFragment", "onCreateView: correctAnswer" + correctAnswer);
+        Log.i("PracticeResultFragment", "onCreateView: totalQuestion" + totalQuestion);
+        Log.i("PracticeResultFragment", "onCreateView: examDate" + examDate);
         if(exam_id !=0 )  quizSharedViewModel.insertExamHistory(user_id, exam_id, correctAnswer, totalQuestion, examDate);
         binding.buttonClose.setOnClickListener(v -> {
             requireActivity().finish();
@@ -49,7 +59,7 @@ public class PracticeResultFragment extends Fragment {
                     .replace(R.id.result_fragment_container, DetailFragment.newInstance())
                     .addToBackStack(null)
                     .commit();
-            Log.i("PracticeResultFragment", "onCreateView: ");
+
         });
         return view;
     }
@@ -57,5 +67,35 @@ public class PracticeResultFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+    private String monthTextToNumber(String monthText){
+        switch (monthText){
+            case "Jan":
+                return "01";
+            case "Feb":
+                return "02";
+            case "Mar":
+                return "03";
+            case "Apr":
+                return "04";
+            case "May":
+                return "05";
+            case "Jun":
+                return "06";
+            case "Jul":
+                return "07";
+            case "Aug":
+                return "08";
+            case "Sep":
+                return "09";
+            case "Oct":
+                return "10";
+            case "Nov":
+                return "11";
+            case "Dec":
+                return "12";
+            default:
+                return "00";
+        }
     }
 }

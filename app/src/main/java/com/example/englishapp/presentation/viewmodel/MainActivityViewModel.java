@@ -119,4 +119,7 @@ public class MainActivityViewModel extends ViewModel {
                 );
         compositeDisposable.add(disposable);
     }
+    public void onResultClick(){
+        Log.i("MainActivityViewModel", "onResultClick: ");
+    }
 }

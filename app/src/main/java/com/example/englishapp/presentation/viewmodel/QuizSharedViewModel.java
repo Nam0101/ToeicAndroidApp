@@ -1,5 +1,7 @@
 package com.example.englishapp.presentation.viewmodel;
 
+import android.util.Log;
+
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -64,7 +66,15 @@ public class QuizSharedViewModel extends ViewModel {
     public void insertExamHistory(int user_id, int exam_id, int correct_answer, int total_question, String exam_date) {
         Disposable disposable = insertExamHistoryUseCase.execute(user_id, exam_id, correct_answer, total_question, exam_date)
                  .subscribeOn(Schedulers.io())
-                    .subscribe();
+                    .subscribe(
+                            examHistoryResponse -> {
+                                examId = examHistoryResponse.getResult().getExam_id();
+                            },
+                            throwable -> {
+                                Log.i("PracticeResultFragment", "insertExamHistory: " + throwable.getMessage());
+                            }
+                    );
+
         compositeDisposable.add(disposable);
     }
 }

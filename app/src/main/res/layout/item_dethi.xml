@@ -57,14 +57,6 @@
                 android:layout_margin="3dp"
                 android:text="100 câu hỏi đọc"/>
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnChitietdethi"
-            android:layout_width="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:text="Chi Tiết"
-            android:background="@drawable/bo_vien_button"
-            android:layout_margin="7dp"/>
 
 
 

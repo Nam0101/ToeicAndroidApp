@@ -3,6 +3,7 @@ package com.example.englishapp.data.repository.impl;
 import com.example.englishapp.data.entity.UserEntity;
 import com.example.englishapp.data.local.dao.UserDao;
 import com.example.englishapp.data.model.ExamDateResponse;
+import com.example.englishapp.data.model.GetExamHistoryResponse;
 import com.example.englishapp.data.model.UserModel;
 import com.example.englishapp.data.remote.UserService;
 import com.example.englishapp.data.repository.UserRepository;
@@ -59,6 +60,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Observable<ExamDateResponse> getExamDate(int user_id) {
         return userService.getExamDate(user_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<GetExamHistoryResponse> getExamHistory(int userId) {
+        return userService.getExamHistory(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

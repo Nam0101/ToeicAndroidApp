@@ -2,6 +2,7 @@ package com.example.englishapp.data.repository;
 
 import com.example.englishapp.data.entity.UserEntity;
 import com.example.englishapp.data.model.ExamDateResponse;
+import com.example.englishapp.data.model.GetExamHistoryResponse;
 import com.example.englishapp.data.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -18,5 +19,6 @@ public interface UserRepository {
     Observable<ExamDateResponse> updateExamDate(int user_id, String exam_date);
 
     Observable<ExamDateResponse> getExamDate(int user_id);
+    Observable<GetExamHistoryResponse> getExamHistory(int userId);
 
 }

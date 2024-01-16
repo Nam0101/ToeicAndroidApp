@@ -2,9 +2,11 @@ package com.example.englishapp.data.repository.impl;
 
 import com.example.englishapp.data.model.ExamHistoryResponse;
 import com.example.englishapp.data.model.ExamResponse;
+import com.example.englishapp.data.model.GetExamHistoryResponse;
 import com.example.englishapp.data.model.QuizQuestionModel;
 import com.example.englishapp.data.remote.ExamService;
 import com.example.englishapp.data.remote.QuestionService;
+import com.example.englishapp.data.remote.UserService;
 import com.example.englishapp.data.repository.QuestionRepository;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -12,10 +14,12 @@ import io.reactivex.rxjava3.core.Observable;
 public class QuestionRepositoryImpl implements QuestionRepository {
     private final QuestionService questionService;
     private final ExamService examService;
+    private final UserService userService;
 
-    public QuestionRepositoryImpl(QuestionService questionService, ExamService examService) {
+    public QuestionRepositoryImpl(QuestionService questionService, ExamService examService, UserService userService) {
         this.questionService = questionService;
         this.examService = examService;
+        this.userService = userService;
     }
 
     @Override
@@ -91,8 +95,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public Observable<ExamHistoryResponse> getExamHistory(int userId) {
-        return null;
+    public Observable<GetExamHistoryResponse> getExamHistory(int userId) {
+        return userService.getExamHistory(userId);
     }
 
 }

@@ -6,21 +6,26 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.englishapp.data.model.ExamResult;
 import com.example.englishapp.data.model.Function;
 import com.example.englishapp.data.model.User;
 import com.example.englishapp.domain.CurrentUser;
 import com.example.englishapp.domain.Functions;
 import com.example.englishapp.domain.GetExamDateUseCase;
+import com.example.englishapp.domain.GetExamHistoryUseCase;
 import com.example.englishapp.domain.GetFunctionsUseCase;
 import com.example.englishapp.domain.UpdateExamDateUseCase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class MainActivityViewModel extends ViewModel {
@@ -28,6 +33,7 @@ public class MainActivityViewModel extends ViewModel {
     public final GetFunctionsUseCase getFunctionsUseCase;
     public final UpdateExamDateUseCase updateExamDateUseCase;
     public final GetExamDateUseCase getExamDateUseCase;
+    public final GetExamHistoryUseCase getExamHistoryUseCase;
 
     public ObservableField<Boolean> isFragmentVisible = new ObservableField<>(false);
 
@@ -43,16 +49,18 @@ public class MainActivityViewModel extends ViewModel {
     public ObservableField<Boolean> isPart5Checked = new ObservableField<>(false);
     public ObservableField<Boolean> isPart6Checked = new ObservableField<>(false);
     public ObservableField<Boolean> isPart7Checked = new ObservableField<>(false);
+    public MutableLiveData<List<ExamResult>> examResults = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Integer>> selectedParts = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Inject
-    public MainActivityViewModel(GetFunctionsUseCase getFunctionsUseCase, UpdateExamDateUseCase updateExamDateUseCase, GetExamDateUseCase getExamDateUseCase) {
+    public MainActivityViewModel(GetFunctionsUseCase getFunctionsUseCase, UpdateExamDateUseCase updateExamDateUseCase, GetExamDateUseCase getExamDateUseCase, GetExamHistoryUseCase getExamHistoryUseCase) {
         this.getFunctionsUseCase = getFunctionsUseCase;
         this.updateExamDateUseCase = updateExamDateUseCase;
         this.getExamDateUseCase = getExamDateUseCase;
+        this.getExamHistoryUseCase = getExamHistoryUseCase;
         getFunctions();
         getSelectedDate();
         Log.i("MainActivityViewModel", "MainActivityViewModel created!");
@@ -120,6 +128,20 @@ public class MainActivityViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
     public void onResultClick(){
-        Log.i("MainActivityViewModel", "onResultClick: ");
+        isFragmentVisible.set(true);
+        Disposable disposable = getExamHistoryUseCase.execute(CurrentUser.getInstance().getUser().getId())
+                .subscribeOn(Schedulers.io()) // network call on IO thread
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        getExamHistoryResponse -> {
+                            if(getExamHistoryResponse.isSuccess()){
+                                examResults.setValue(getExamHistoryResponse.getResult());
+                            }
+                        },
+                        throwable -> {
+                            Log.i("MainActivityViewModel", throwable.getMessage());
+                        }
+                );
+        compositeDisposable.add(disposable);
     }
 }

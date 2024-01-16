@@ -2,6 +2,7 @@ package com.example.englishapp.data.repository;
 
 import com.example.englishapp.data.model.ExamHistoryResponse;
 import com.example.englishapp.data.model.ExamResponse;
+import com.example.englishapp.data.model.GetExamHistoryResponse;
 import com.example.englishapp.data.model.QuizQuestionModel;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -35,7 +36,6 @@ public interface QuestionRepository {
 
     Observable<ExamHistoryResponse> insertExamHistory(int userId, int examId, int correctAnswer, int totalQuestion, String timeStamp);
 
-    Observable<ExamHistoryResponse> getExamHistory(int userId);
+    Observable<GetExamHistoryResponse> getExamHistory(int userId);
 
-    // get exam history
 }

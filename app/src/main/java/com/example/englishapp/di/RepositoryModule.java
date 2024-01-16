@@ -35,8 +35,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    public static QuestionRepository providePart5QuestionRepository(QuestionService questionService, ExamService examService) {
-        return new QuestionRepositoryImpl(questionService, examService);
+    public static QuestionRepository providePart5QuestionRepository(QuestionService questionService, ExamService examService, UserService userService) {
+        return new QuestionRepositoryImpl(questionService, examService, userService);
     }
 
     @Provides

@@ -18,6 +18,7 @@ import com.example.englishapp.databinding.ActivityMainBinding;
 import com.example.englishapp.domain.CurrentUser;
 import com.example.englishapp.presentation.adapters.FunctionAdapter;
 import com.example.englishapp.presentation.fragment.ChoosePartFragment;
+import com.example.englishapp.presentation.fragment.ExamHistoryFragment;
 import com.example.englishapp.presentation.viewmodel.MainActivityViewModel;
 
 import java.text.ParseException;
@@ -89,6 +90,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        mainActivityViewModel.examResults.observe(
+                this,
+                examResults -> {
+                    if (examResults != null && !examResults.isEmpty()) {
+                        ExamHistoryFragment examHistoryFragment = new ExamHistoryFragment();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, examHistoryFragment)
+                                .commit();
+
+                    }
+                }
+        );
     }
 
     private void initializeDrawerToggle() {

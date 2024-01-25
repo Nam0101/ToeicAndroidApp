@@ -36,6 +36,8 @@
         <activity android:name=".presentation.activity.ForgotPasswordActivity"/>
         <activity android:name=".presentation.activity.VocabularyActivity" />
         <activity android:name=".presentation.activity.ExamActivity" />
+        <activity android:name=".presentation.activity.OTPActivity" />
+        <activity android:name=".presentation.activity.NewPasswordActivity" />
     </application>
 
 

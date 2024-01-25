@@ -36,6 +36,7 @@ public class QuizSharedViewModel extends ViewModel {
         this.insertExamHistoryUseCase = insertExamHistoryUseCase;
     }
 
+
     public void addQuestionResult(QuestionResult result) {
         List<QuestionResult> currentResults = questionResults.getValue();
         assert currentResults != null;
@@ -43,7 +44,6 @@ public class QuizSharedViewModel extends ViewModel {
         questionResults.setValue(currentResults);
 
     }
-
     public void calculateScore() {
         int score = 0;
         int points = 0;

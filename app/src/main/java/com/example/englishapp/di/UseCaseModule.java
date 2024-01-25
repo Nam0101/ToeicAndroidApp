@@ -20,7 +20,9 @@ import com.example.englishapp.domain.GetTopicUseCase;
 import com.example.englishapp.domain.GetVocabularyByTopicUseCase;
 import com.example.englishapp.domain.InsertExamHistoryUseCase;
 import com.example.englishapp.domain.LoginUseCase;
+import com.example.englishapp.domain.OTPVerifyUseCase;
 import com.example.englishapp.domain.RegisterUseCase;
+import com.example.englishapp.domain.ResetPasswordUseCase;
 import com.example.englishapp.domain.UpdateExamDateUseCase;
 
 import javax.inject.Singleton;
@@ -134,5 +136,15 @@ public class UseCaseModule {
     @Singleton
     public static GetExamHistoryUseCase provideGetExamHistoryUseCase(QuestionRepository questionRepository) {
         return new GetExamHistoryUseCase(questionRepository);
+    }
+    @Provides
+    @Singleton
+    public static OTPVerifyUseCase provideOTPVerifyUseCase(UserRepository userRepository) {
+        return new OTPVerifyUseCase(userRepository);
+    }
+    @Provides
+    @Singleton
+    public static ResetPasswordUseCase provideResetPasswordUseCase(UserRepository userRepository) {
+        return new ResetPasswordUseCase(userRepository);
     }
 }

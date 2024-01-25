@@ -1,5 +1,6 @@
 package com.example.englishapp.presentation.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -42,7 +43,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private void handleSuccess(Boolean isSuccess) {
         if (isSuccess){
-            finish();
+            Intent intent = new Intent(this, OTPActivity.class);
+            intent.putExtra("email", forgotPasswordViewModel.email.get());
+            intent.putExtra("mobile", forgotPasswordViewModel.mobile.get());
+            startActivity(intent);
+
         }
     }
 

@@ -71,4 +71,16 @@ public class UserRepositoryImpl implements UserRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<UserModel> xacthucma(String email, String code) {
+        return userService.xacthucma(email, code)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    @Override
+     public Observable<UserModel> doimatkhau(String email, String mobile, String code, String pass) {
+        return userService.doimatkhau(email, mobile, code, pass)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

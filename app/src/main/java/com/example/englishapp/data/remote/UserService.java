@@ -66,4 +66,5 @@ public interface UserService {
     Observable<GetExamHistoryResponse> getExamHistory(
             @Field("user_id") int userId
     );
+
 }

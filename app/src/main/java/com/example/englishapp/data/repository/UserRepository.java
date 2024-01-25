@@ -20,5 +20,7 @@ public interface UserRepository {
 
     Observable<ExamDateResponse> getExamDate(int user_id);
     Observable<GetExamHistoryResponse> getExamHistory(int userId);
+    Observable<UserModel> xacthucma(String email, String code);
+    Observable<UserModel> doimatkhau(String email, String mobile, String code, String pass);
 
 }

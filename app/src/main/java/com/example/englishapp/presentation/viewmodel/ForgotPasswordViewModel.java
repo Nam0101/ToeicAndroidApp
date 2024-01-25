@@ -24,6 +24,7 @@ public class ForgotPasswordViewModel  extends ViewModel {
     public MutableLiveData<Boolean> isSucess = new MutableLiveData<>();
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
 
+
     @Inject
     public ForgotPasswordViewModel(ForgotPasswordUseCase forgotPasswordUseCase) {
         this.forgotPasswordUseCase = forgotPasswordUseCase;
@@ -45,7 +46,7 @@ public class ForgotPasswordViewModel  extends ViewModel {
                 .subscribe(userModel -> {
                             isSucess.setValue(userModel.isSuccess());
                             message.setValue(userModel.getMessage());
-                            Log.i("ForgotPasswordViewModel", "login: " + userModel.getMessage());
+                            Log.i("ForgotPasswordViewModel", "onCreate: " + userModel.isSuccess());
                         }
                         , throwable -> {
                             isSucess.setValue(false);

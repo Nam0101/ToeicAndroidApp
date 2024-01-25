@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <import type="android.view.View" />
+        <import type="android.text.InputType" />
+        <variable
+            name="newPasswordActivityViewModel"
+            type="com.example.englishapp.presentation.viewmodel.NewPasswordActivityViewModel" />
+    </data>
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -41,18 +51,21 @@
             android:hint="New Password"
             android:background="@android:color/transparent"
             android:paddingStart="20dp"
+            android:text="@={newPasswordActivityViewModel.newPassword}"
             android:paddingEnd="20dp"
             android:textSize="16sp"
-            android:inputType="textPassword"
+            android:inputType="@{newPasswordActivityViewModel.isPasswordShowing.get() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)}"
             android:maxLines="1"/>
         <ImageView
             android:id="@+id/IconPassHideUp"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
+
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:src="@drawable/eye"
+            android:src="@{newPasswordActivityViewModel.isPasswordShowing.get() ? @drawable/eye : @drawable/hide}"
+            android:onClick="@{()->newPasswordActivityViewModel.onClickHidePass()}"
             android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"/>
 
@@ -75,7 +88,8 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textSize="16sp"
-            android:inputType="textPassword"
+            android:text="@={newPasswordActivityViewModel.confirmPassword}"
+            android:inputType="@{newPasswordActivityViewModel.isConfirmPasswordShowing.get() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)}"
             android:maxLines="1"/>
         <ImageView
             android:id="@+id/IconConPassHideUp"
@@ -84,7 +98,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:src="@drawable/eye"
+            android:src="@{newPasswordActivityViewModel.isConfirmPasswordShowing.get() ? @drawable/eye : @drawable/hide}"
+            android:onClick="@{()->newPasswordActivityViewModel.onClickHideConfirmPass()}"
             android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"/>
 
@@ -98,6 +113,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnChangePassword"
+        android:onClick="@{()->newPasswordActivityViewModel.changePassword()}"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginEnd="20dp"
@@ -125,9 +141,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:textColor="@color/primary"
+            android:onClick="@{()->newPasswordActivityViewModel.onClickSignIn()}"
             android:text="Sign In"
             android:textStyle="bold"/>
     </LinearLayout>
-
-
 </LinearLayout>
+</layout>

@@ -44,10 +44,10 @@ android {
     //base url
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.243/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.18.95/tienganh/\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.243/tienganh/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.18.95/tienganh/\"")
         }
     }
 
